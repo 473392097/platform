@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sudao.cloud.module.praise.dao.mapper.FeedbackDTOMapper">
+  <resultMap id="BaseResultMap" type="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="feedback_username" jdbcType="VARCHAR" property="feedbackUsername" />
+    <result column="feedback_cellphone" jdbcType="VARCHAR" property="feedbackCellphone" />
+    <result column="read_status" jdbcType="BIT" property="readStatus" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="feedback_reply" jdbcType="VARCHAR" property="feedbackReply" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="created_by_id" jdbcType="BIGINT" property="createdById" />
+    <result column="created_time" jdbcType="BIGINT" property="createdTime" />
+    <result column="updated_by_id" jdbcType="BIGINT" property="updatedById" />
+    <result column="updated_time" jdbcType="BIGINT" property="updatedTime" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, feedback_username, feedback_cellphone, read_status, content, feedback_reply, 
+    status, created_by_id, created_time, updated_by_id, updated_time, last_update
+  </sql>
+  <select id="selectByExample" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cloud_component_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cloud_component_feedback
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cloud_component_feedback
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTOExample">
+    delete from cloud_component_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
+    insert into cloud_component_feedback (id, feedback_username, feedback_cellphone, 
+      read_status, content, feedback_reply, 
+      status, created_by_id, created_time, 
+      updated_by_id, updated_time, last_update
+      )
+    values (#{id,jdbcType=BIGINT}, #{feedbackUsername,jdbcType=VARCHAR}, #{feedbackCellphone,jdbcType=VARCHAR}, 
+      #{readStatus,jdbcType=BIT}, #{content,jdbcType=VARCHAR}, #{feedbackReply,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{createdById,jdbcType=BIGINT}, #{createdTime,jdbcType=BIGINT}, 
+      #{updatedById,jdbcType=BIGINT}, #{updatedTime,jdbcType=BIGINT}, #{lastUpdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
+    insert into cloud_component_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="feedbackUsername != null">
+        feedback_username,
+      </if>
+      <if test="feedbackCellphone != null">
+        feedback_cellphone,
+      </if>
+      <if test="readStatus != null">
+        read_status,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="feedbackReply != null">
+        feedback_reply,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdById != null">
+        created_by_id,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedById != null">
+        updated_by_id,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="feedbackUsername != null">
+        #{feedbackUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackCellphone != null">
+        #{feedbackCellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null">
+        #{readStatus,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackReply != null">
+        #{feedbackReply,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="createdById != null">
+        #{createdById,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedById != null">
+        #{updatedById,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTOExample" resultType="java.lang.Long">
+    select count(*) from cloud_component_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cloud_component_feedback
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.feedbackUsername != null">
+        feedback_username = #{record.feedbackUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackCellphone != null">
+        feedback_cellphone = #{record.feedbackCellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readStatus != null">
+        read_status = #{record.readStatus,jdbcType=BIT},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackReply != null">
+        feedback_reply = #{record.feedbackReply,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.createdById != null">
+        created_by_id = #{record.createdById,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedById != null">
+        updated_by_id = #{record.updatedById,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedTime != null">
+        updated_time = #{record.updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastUpdate != null">
+        last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cloud_component_feedback
+    set id = #{record.id,jdbcType=BIGINT},
+      feedback_username = #{record.feedbackUsername,jdbcType=VARCHAR},
+      feedback_cellphone = #{record.feedbackCellphone,jdbcType=VARCHAR},
+      read_status = #{record.readStatus,jdbcType=BIT},
+      content = #{record.content,jdbcType=VARCHAR},
+      feedback_reply = #{record.feedbackReply,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=BIT},
+      created_by_id = #{record.createdById,jdbcType=BIGINT},
+      created_time = #{record.createdTime,jdbcType=BIGINT},
+      updated_by_id = #{record.updatedById,jdbcType=BIGINT},
+      updated_time = #{record.updatedTime,jdbcType=BIGINT},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
+    update cloud_component_feedback
+    <set>
+      <if test="feedbackUsername != null">
+        feedback_username = #{feedbackUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackCellphone != null">
+        feedback_cellphone = #{feedbackCellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null">
+        read_status = #{readStatus,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackReply != null">
+        feedback_reply = #{feedbackReply,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="createdById != null">
+        created_by_id = #{createdById,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedById != null">
+        updated_by_id = #{updatedById,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
+    update cloud_component_feedback
+    set feedback_username = #{feedbackUsername,jdbcType=VARCHAR},
+      feedback_cellphone = #{feedbackCellphone,jdbcType=VARCHAR},
+      read_status = #{readStatus,jdbcType=BIT},
+      content = #{content,jdbcType=VARCHAR},
+      feedback_reply = #{feedbackReply,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      created_by_id = #{createdById,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=BIGINT},
+      updated_by_id = #{updatedById,jdbcType=BIGINT},
+      updated_time = #{updatedTime,jdbcType=BIGINT},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cloud_component_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

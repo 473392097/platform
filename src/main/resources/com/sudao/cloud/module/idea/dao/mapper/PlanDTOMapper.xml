@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sudao.cloud.module.idea.dao.mapper.PlanDTOMapper">
+  <resultMap id="BaseResultMap" type="com.sudao.cloud.module.idea.dao.dto.PlanDTO">
+    <id column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="idea_id" jdbcType="BIGINT" property="ideaId" />
+    <result column="owner_id" jdbcType="BIGINT" property="ownerId" />
+    <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
+    <result column="catelog_id" jdbcType="BIGINT" property="catelogId" />
+    <result column="catelog_name" jdbcType="VARCHAR" property="catelogName" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="cover_image" jdbcType="VARCHAR" property="coverImage" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="is_origin" jdbcType="BIT" property="isOrigin" />
+    <result column="iteration_description" jdbcType="VARCHAR" property="iterationDescription" />
+    <result column="audit" jdbcType="BIT" property="audit" />
+    <result column="audit_user_id" jdbcType="BIGINT" property="auditUserId" />
+    <result column="audit_user_name" jdbcType="VARCHAR" property="auditUserName" />
+    <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="praise_number" jdbcType="INTEGER" property="praiseNumber" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="created_by_id" jdbcType="BIGINT" property="createdById" />
+    <result column="created_time" jdbcType="BIGINT" property="createdTime" />
+    <result column="updated_by_id" jdbcType="BIGINT" property="updatedById" />
+    <result column="updated_time" jdbcType="BIGINT" property="updatedTime" />
+    <result column="lastUpdate" jdbcType="TIMESTAMP" property="lastupdate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    plan_id, idea_id, owner_id, owner_name, catelog_id, catelog_name, title, description, 
+    cover_image, version, is_origin, iteration_description, audit, audit_user_id, audit_user_name, 
+    audit_time, praise_number, status, created_by_id, created_time, updated_by_id, updated_time, 
+    lastUpdate
+  </sql>
+  <select id="selectByExample" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from kz_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from kz_plan
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from kz_plan
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTOExample">
+    delete from kz_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTO">
+    insert into kz_plan (plan_id, idea_id, owner_id, 
+      owner_name, catelog_id, catelog_name, 
+      title, description, cover_image, 
+      version, is_origin, iteration_description, 
+      audit, audit_user_id, audit_user_name, 
+      audit_time, praise_number, status, 
+      created_by_id, created_time, updated_by_id, 
+      updated_time, lastUpdate)
+    values (#{planId,jdbcType=BIGINT}, #{ideaId,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT}, 
+      #{ownerName,jdbcType=VARCHAR}, #{catelogId,jdbcType=BIGINT}, #{catelogName,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, 
+      #{version,jdbcType=VARCHAR}, #{isOrigin,jdbcType=BIT}, #{iterationDescription,jdbcType=VARCHAR}, 
+      #{audit,jdbcType=BIT}, #{auditUserId,jdbcType=BIGINT}, #{auditUserName,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{praiseNumber,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
+      #{createdById,jdbcType=BIGINT}, #{createdTime,jdbcType=BIGINT}, #{updatedById,jdbcType=BIGINT}, 
+      #{updatedTime,jdbcType=BIGINT}, #{lastupdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTO">
+    insert into kz_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="ideaId != null">
+        idea_id,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="ownerName != null">
+        owner_name,
+      </if>
+      <if test="catelogId != null">
+        catelog_id,
+      </if>
+      <if test="catelogName != null">
+        catelog_name,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="coverImage != null">
+        cover_image,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="isOrigin != null">
+        is_origin,
+      </if>
+      <if test="iterationDescription != null">
+        iteration_description,
+      </if>
+      <if test="audit != null">
+        audit,
+      </if>
+      <if test="auditUserId != null">
+        audit_user_id,
+      </if>
+      <if test="auditUserName != null">
+        audit_user_name,
+      </if>
+      <if test="auditTime != null">
+        audit_time,
+      </if>
+      <if test="praiseNumber != null">
+        praise_number,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdById != null">
+        created_by_id,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedById != null">
+        updated_by_id,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="lastupdate != null">
+        lastUpdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planId != null">
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="ideaId != null">
+        #{ideaId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerName != null">
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="catelogId != null">
+        #{catelogId,jdbcType=BIGINT},
+      </if>
+      <if test="catelogName != null">
+        #{catelogName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImage != null">
+        #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="isOrigin != null">
+        #{isOrigin,jdbcType=BIT},
+      </if>
+      <if test="iterationDescription != null">
+        #{iterationDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null">
+        #{audit,jdbcType=BIT},
+      </if>
+      <if test="auditUserId != null">
+        #{auditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="auditUserName != null">
+        #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="praiseNumber != null">
+        #{praiseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="createdById != null">
+        #{createdById,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedById != null">
+        #{updatedById,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastupdate != null">
+        #{lastupdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTOExample" resultType="java.lang.Long">
+    select count(*) from kz_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update kz_plan
+    <set>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ideaId != null">
+        idea_id = #{record.ideaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ownerId != null">
+        owner_id = #{record.ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ownerName != null">
+        owner_name = #{record.ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catelogId != null">
+        catelog_id = #{record.catelogId,jdbcType=BIGINT},
+      </if>
+      <if test="record.catelogName != null">
+        catelog_name = #{record.catelogName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverImage != null">
+        cover_image = #{record.coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOrigin != null">
+        is_origin = #{record.isOrigin,jdbcType=BIT},
+      </if>
+      <if test="record.iterationDescription != null">
+        iteration_description = #{record.iterationDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.audit != null">
+        audit = #{record.audit,jdbcType=BIT},
+      </if>
+      <if test="record.auditUserId != null">
+        audit_user_id = #{record.auditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.auditUserName != null">
+        audit_user_name = #{record.auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null">
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.praiseNumber != null">
+        praise_number = #{record.praiseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.createdById != null">
+        created_by_id = #{record.createdById,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedById != null">
+        updated_by_id = #{record.updatedById,jdbcType=BIGINT},
+      </if>
+      <if test="record.updatedTime != null">
+        updated_time = #{record.updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastupdate != null">
+        lastUpdate = #{record.lastupdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update kz_plan
+    set plan_id = #{record.planId,jdbcType=BIGINT},
+      idea_id = #{record.ideaId,jdbcType=BIGINT},
+      owner_id = #{record.ownerId,jdbcType=BIGINT},
+      owner_name = #{record.ownerName,jdbcType=VARCHAR},
+      catelog_id = #{record.catelogId,jdbcType=BIGINT},
+      catelog_name = #{record.catelogName,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      cover_image = #{record.coverImage,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=VARCHAR},
+      is_origin = #{record.isOrigin,jdbcType=BIT},
+      iteration_description = #{record.iterationDescription,jdbcType=VARCHAR},
+      audit = #{record.audit,jdbcType=BIT},
+      audit_user_id = #{record.auditUserId,jdbcType=BIGINT},
+      audit_user_name = #{record.auditUserName,jdbcType=VARCHAR},
+      audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      praise_number = #{record.praiseNumber,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=BIT},
+      created_by_id = #{record.createdById,jdbcType=BIGINT},
+      created_time = #{record.createdTime,jdbcType=BIGINT},
+      updated_by_id = #{record.updatedById,jdbcType=BIGINT},
+      updated_time = #{record.updatedTime,jdbcType=BIGINT},
+      lastUpdate = #{record.lastupdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTO">
+    update kz_plan
+    <set>
+      <if test="ideaId != null">
+        idea_id = #{ideaId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerName != null">
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="catelogId != null">
+        catelog_id = #{catelogId,jdbcType=BIGINT},
+      </if>
+      <if test="catelogName != null">
+        catelog_name = #{catelogName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImage != null">
+        cover_image = #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="isOrigin != null">
+        is_origin = #{isOrigin,jdbcType=BIT},
+      </if>
+      <if test="iterationDescription != null">
+        iteration_description = #{iterationDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null">
+        audit = #{audit,jdbcType=BIT},
+      </if>
+      <if test="auditUserId != null">
+        audit_user_id = #{auditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="auditUserName != null">
+        audit_user_name = #{auditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="praiseNumber != null">
+        praise_number = #{praiseNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="createdById != null">
+        created_by_id = #{createdById,jdbcType=BIGINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedById != null">
+        updated_by_id = #{updatedById,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastupdate != null">
+        lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTO">
+    update kz_plan
+    set idea_id = #{ideaId,jdbcType=BIGINT},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      catelog_id = #{catelogId,jdbcType=BIGINT},
+      catelog_name = #{catelogName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      cover_image = #{coverImage,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      is_origin = #{isOrigin,jdbcType=BIT},
+      iteration_description = #{iterationDescription,jdbcType=VARCHAR},
+      audit = #{audit,jdbcType=BIT},
+      audit_user_id = #{auditUserId,jdbcType=BIGINT},
+      audit_user_name = #{auditUserName,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      praise_number = #{praiseNumber,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      created_by_id = #{createdById,jdbcType=BIGINT},
+      created_time = #{createdTime,jdbcType=BIGINT},
+      updated_by_id = #{updatedById,jdbcType=BIGINT},
+      updated_time = #{updatedTime,jdbcType=BIGINT},
+      lastUpdate = #{lastupdate,jdbcType=TIMESTAMP}
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithRowbounds" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from kz_plan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
