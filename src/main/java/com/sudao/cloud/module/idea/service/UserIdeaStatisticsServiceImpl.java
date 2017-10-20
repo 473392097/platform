@@ -35,14 +35,16 @@ public class UserIdeaStatisticsServiceImpl extends BaseServiceImpl implements Us
 	@Override
 	public boolean create(UserIdeaStatisticsReq obj) {
 		logger.debug("Creating UserIdeaStatistics: {}", obj);
-		Long time = new Date().getTime();
+		Date date = new Date();
 
 		UserIdeaStatisticsDTO userIdeaStatisticsDTO = BeanUtils.copyProperties(obj, UserIdeaStatisticsDTO.class);
 		userIdeaStatisticsDTO.setStatus(Status.NORMAL);
-		userIdeaStatisticsDTO.setCreatedById(obj.getOperator());
-		userIdeaStatisticsDTO.setCreatedTime(time);
-		userIdeaStatisticsDTO.setUpdatedById(obj.getOperator());
-		userIdeaStatisticsDTO.setUpdatedTime(time);
+        userIdeaStatisticsDTO.setCreateTime(date);
+        userIdeaStatisticsDTO.setCreateUserId(obj.getOperatorId());
+        userIdeaStatisticsDTO.setCreateUserName(obj.getOperatorName());
+        userIdeaStatisticsDTO.setUpdateTime(date);
+        userIdeaStatisticsDTO.setUpdateUserId(obj.getOperatorId());
+        userIdeaStatisticsDTO.setUpdateUserName(obj.getOperatorName());
 
 		return this.userIdeaStatisticsDTOMapper.insertSelective(userIdeaStatisticsDTO) > 0;
 	}
@@ -52,8 +54,9 @@ public class UserIdeaStatisticsServiceImpl extends BaseServiceImpl implements Us
 		logger.debug("Updating UserIdeaStatistics: {}", obj);
 
 		UserIdeaStatisticsDTO userIdeaStatisticsDTO = BeanUtils.copyProperties(obj, UserIdeaStatisticsDTO.class);
-		userIdeaStatisticsDTO.setUpdatedById(obj.getOperator());
-		userIdeaStatisticsDTO.setUpdatedTime(new Date().getTime());
+		userIdeaStatisticsDTO.setUpdateTime(new Date());
+        userIdeaStatisticsDTO.setUpdateUserId(obj.getOperatorId());
+        userIdeaStatisticsDTO.setUpdateUserName(obj.getOperatorName());
 		return this.userIdeaStatisticsDTOMapper.updateByPrimaryKeySelective(userIdeaStatisticsDTO) > 0;
 	}
 

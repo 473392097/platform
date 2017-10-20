@@ -13,10 +13,7 @@ import com.sudao.cloud.module.idea.service.UserIdeaStatisticsService;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.controller.LocalBasicController;
 
-/**
- * 用户创意统计API
- * @author Spector
- */
+
 @RestPrototypeController
 @RequestMapping("/ideaStatistics")
 public class UserIdeaStatisticsController extends LocalBasicController {
@@ -29,7 +26,7 @@ public class UserIdeaStatisticsController extends LocalBasicController {
         setOk(ResultCode.OK);
 
         // create
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         boolean created = userIdeaStatisticsService.create(obj);
         if(!created){
             setFail(ResultCode.CREATE_FAIL);
@@ -41,7 +38,7 @@ public class UserIdeaStatisticsController extends LocalBasicController {
     public BaseRecord update(@PathVariable(name = "id") final Long id, @RequestBody UserIdeaStatisticsReq obj) {
         setOk(ResultCode.OK);
 
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setId(id);
         boolean updated = userIdeaStatisticsService.update(obj);
         if(!updated){
@@ -53,7 +50,7 @@ public class UserIdeaStatisticsController extends LocalBasicController {
     @PostMapping("/delete/{id}")
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         UserIdeaStatisticsReq obj = new UserIdeaStatisticsReq();
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setStatus(Status.DELETED);
         return update(id, obj);
     }

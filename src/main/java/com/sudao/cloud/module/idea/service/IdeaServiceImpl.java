@@ -35,14 +35,16 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 	@Override
 	public boolean create(IdeaReq obj) {
 		logger.debug("Creating Idea: {}", obj);
-		Long time = new Date().getTime();
+		Date date = new Date();
 
 		IdeaDTO ideaDTO = BeanUtils.copyProperties(obj, IdeaDTO.class);
 		ideaDTO.setStatus(Status.NORMAL);
-		ideaDTO.setCreatedById(obj.getOperator());
-		ideaDTO.setCreatedTime(time);
-		ideaDTO.setUpdatedById(obj.getOperator());
-		ideaDTO.setUpdatedTime(time);
+        ideaDTO.setCreateTime(date);
+        ideaDTO.setCreateUserId(obj.getOperatorId());
+        ideaDTO.setCreateUserName(obj.getOperatorName());
+        ideaDTO.setUpdateTime(date);
+        ideaDTO.setUpdateUserId(obj.getOperatorId());
+        ideaDTO.setUpdateUserName(obj.getOperatorName());
 
 		return this.ideaDTOMapper.insertSelective(ideaDTO) > 0;
 	}
@@ -52,8 +54,9 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 		logger.debug("Updating Idea: {}", obj);
 
 		IdeaDTO ideaDTO = BeanUtils.copyProperties(obj, IdeaDTO.class);
-		ideaDTO.setUpdatedById(obj.getOperator());
-		ideaDTO.setUpdatedTime(new Date().getTime());
+		ideaDTO.setUpdateTime(new Date());
+        ideaDTO.setUpdateUserId(obj.getOperatorId());
+        ideaDTO.setUpdateUserName(obj.getOperatorName());
 		return this.ideaDTOMapper.updateByPrimaryKeySelective(ideaDTO) > 0;
 	}
 

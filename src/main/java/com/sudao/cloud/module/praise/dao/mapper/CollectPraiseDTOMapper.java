@@ -3,12 +3,9 @@ package com.sudao.cloud.module.praise.dao.mapper;
 import com.sudao.cloud.module.praise.dao.dto.CollectPraiseDTO;
 import com.sudao.cloud.module.praise.dao.dto.CollectPraiseDTOExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
-@Mapper
 public interface CollectPraiseDTOMapper {
     long countByExample(CollectPraiseDTOExample example);
 

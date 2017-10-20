@@ -13,10 +13,7 @@ import com.sudao.cloud.module.praise.service.CollectPraiseService;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.controller.LocalBasicController;
 
-/**
- * 点赞收藏类API
- * @author Spector
- */
+
 @RestPrototypeController
 @RequestMapping("/praise")
 public class CollectPraiseController extends LocalBasicController {
@@ -29,7 +26,7 @@ public class CollectPraiseController extends LocalBasicController {
         setOk(ResultCode.OK);
 
         // create
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         boolean created = collectPraiseService.create(obj);
         if(!created){
             setFail(ResultCode.CREATE_FAIL);
@@ -41,7 +38,7 @@ public class CollectPraiseController extends LocalBasicController {
     public BaseRecord update(@PathVariable(name = "id") final Long id, @RequestBody CollectPraiseReq obj) {
         setOk(ResultCode.OK);
 
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setId(id);
         boolean updated = collectPraiseService.update(obj);
         if(!updated){
@@ -53,7 +50,7 @@ public class CollectPraiseController extends LocalBasicController {
     @PostMapping("/delete/{id}")
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         CollectPraiseReq obj = new CollectPraiseReq();
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setStatus(Status.DELETED);
         return update(id, obj);
     }

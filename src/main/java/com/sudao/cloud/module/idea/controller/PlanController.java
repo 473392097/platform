@@ -13,10 +13,7 @@ import com.sudao.cloud.module.idea.service.PlanService;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.controller.LocalBasicController;
 
-/**
- * 创意的版本API
- * @author Spector
- */
+
 @RestPrototypeController
 @RequestMapping("/plan")
 public class PlanController extends LocalBasicController {
@@ -29,7 +26,7 @@ public class PlanController extends LocalBasicController {
         setOk(ResultCode.OK);
 
         // create
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         boolean created = planService.create(obj);
         if(!created){
             setFail(ResultCode.CREATE_FAIL);
@@ -41,7 +38,7 @@ public class PlanController extends LocalBasicController {
     public BaseRecord update(@PathVariable(name = "planId") final Long planId, @RequestBody PlanReq obj) {
         setOk(ResultCode.OK);
 
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setPlanId(planId);
         boolean updated = planService.update(obj);
         if(!updated){
@@ -53,7 +50,7 @@ public class PlanController extends LocalBasicController {
     @PostMapping("/delete/{planId}")
     public BaseRecord delete(@PathVariable(name = "planId") final Long planId) {
         PlanReq obj = new PlanReq();
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setStatus(Status.DELETED);
         return update(planId, obj);
     }

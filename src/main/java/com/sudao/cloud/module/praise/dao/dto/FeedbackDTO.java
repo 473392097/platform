@@ -18,15 +18,23 @@ public class FeedbackDTO implements Serializable {
 
     private String feedbackReply;
 
+    private Integer displayOrder;
+
+    private Integer version;
+
     private Status status;
 
-    private Long createdById;
+    private Long createUserId;
 
-    private Long createdTime;
+    private String createUserName;
 
-    private Long updatedById;
+    private Date createTime;
 
-    private Long updatedTime;
+    private Long updateUserId;
+
+    private String updateUserName;
+
+    private Date updateTime;
 
     private Date lastUpdate;
 
@@ -80,6 +88,22 @@ public class FeedbackDTO implements Serializable {
         this.feedbackReply = feedbackReply == null ? null : feedbackReply.trim();
     }
 
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     public Status getStatus() {
         return status;
     }
@@ -88,36 +112,52 @@ public class FeedbackDTO implements Serializable {
         this.status = status;
     }
 
-    public Long getCreatedById() {
-        return createdById;
+    public Long getCreateUserId() {
+        return createUserId;
     }
 
-    public void setCreatedById(Long createdById) {
-        this.createdById = createdById;
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
-    public Long getCreatedTime() {
-        return createdTime;
+    public String getCreateUserName() {
+        return createUserName;
     }
 
-    public void setCreatedTime(Long createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName == null ? null : createUserName.trim();
     }
 
-    public Long getUpdatedById() {
-        return updatedById;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setUpdatedById(Long updatedById) {
-        this.updatedById = updatedById;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Long getUpdatedTime() {
-        return updatedTime;
+    public Long getUpdateUserId() {
+        return updateUserId;
     }
 
-    public void setUpdatedTime(Long updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateUserId(Long updateUserId) {
+        this.updateUserId = updateUserId;
+    }
+
+    public String getUpdateUserName() {
+        return updateUserName;
+    }
+
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName == null ? null : updateUserName.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Date getLastUpdate() {

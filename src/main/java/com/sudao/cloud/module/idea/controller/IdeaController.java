@@ -13,10 +13,7 @@ import com.sudao.cloud.module.idea.service.IdeaService;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.controller.LocalBasicController;
 
-/**
- * 创意API
- * @author Spector
- */
+
 @RestPrototypeController
 @RequestMapping("/idea")
 public class IdeaController extends LocalBasicController {
@@ -29,7 +26,7 @@ public class IdeaController extends LocalBasicController {
         setOk(ResultCode.OK);
 
         // create
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         boolean created = ideaService.create(obj);
         if(!created){
             setFail(ResultCode.CREATE_FAIL);
@@ -41,7 +38,7 @@ public class IdeaController extends LocalBasicController {
     public BaseRecord update(@PathVariable(name = "ideaId") final Long ideaId, @RequestBody IdeaReq obj) {
         setOk(ResultCode.OK);
 
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setIdeaId(ideaId);
         boolean updated = ideaService.update(obj);
         if(!updated){
@@ -53,7 +50,7 @@ public class IdeaController extends LocalBasicController {
     @PostMapping("/delete/{ideaId}")
     public BaseRecord delete(@PathVariable(name = "ideaId") final Long ideaId) {
         IdeaReq obj = new IdeaReq();
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setStatus(Status.DELETED);
         return update(ideaId, obj);
     }

@@ -8,11 +8,15 @@
     <result column="read_status" jdbcType="BIT" property="readStatus" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="feedback_reply" jdbcType="VARCHAR" property="feedbackReply" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="created_by_id" jdbcType="BIGINT" property="createdById" />
-    <result column="created_time" jdbcType="BIGINT" property="createdTime" />
-    <result column="updated_by_id" jdbcType="BIGINT" property="updatedById" />
-    <result column="updated_time" jdbcType="BIGINT" property="updatedTime" />
+    <result column="display_order" jdbcType="INTEGER" property="displayOrder" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -75,7 +79,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, feedback_username, feedback_cellphone, read_status, content, feedback_reply, 
-    status, created_by_id, created_time, updated_by_id, updated_time, last_update
+    display_order, version, status, create_user_id, create_user_name, create_time, update_user_id, 
+    update_user_name, update_time, last_update
   </sql>
   <select id="selectByExample" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTOExample" resultMap="BaseResultMap">
     select
@@ -110,14 +115,16 @@
   <insert id="insert" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
     insert into cloud_component_feedback (id, feedback_username, feedback_cellphone, 
       read_status, content, feedback_reply, 
-      status, created_by_id, created_time, 
-      updated_by_id, updated_time, last_update
-      )
+      display_order, version, status, 
+      create_user_id, create_user_name, create_time, 
+      update_user_id, update_user_name, update_time, 
+      last_update)
     values (#{id,jdbcType=BIGINT}, #{feedbackUsername,jdbcType=VARCHAR}, #{feedbackCellphone,jdbcType=VARCHAR}, 
       #{readStatus,jdbcType=BIT}, #{content,jdbcType=VARCHAR}, #{feedbackReply,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{createdById,jdbcType=BIGINT}, #{createdTime,jdbcType=BIGINT}, 
-      #{updatedById,jdbcType=BIGINT}, #{updatedTime,jdbcType=BIGINT}, #{lastUpdate,jdbcType=TIMESTAMP}
-      )
+      #{displayOrder,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=BIGINT}, #{updateUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
     insert into cloud_component_feedback
@@ -140,20 +147,32 @@
       <if test="feedbackReply != null">
         feedback_reply,
       </if>
+      <if test="displayOrder != null">
+        display_order,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
       <if test="status != null">
         status,
       </if>
-      <if test="createdById != null">
-        created_by_id,
+      <if test="createUserId != null">
+        create_user_id,
       </if>
-      <if test="createdTime != null">
-        created_time,
+      <if test="createUserName != null">
+        create_user_name,
       </if>
-      <if test="updatedById != null">
-        updated_by_id,
+      <if test="createTime != null">
+        create_time,
       </if>
-      <if test="updatedTime != null">
-        updated_time,
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
       </if>
       <if test="lastUpdate != null">
         last_update,
@@ -178,20 +197,32 @@
       <if test="feedbackReply != null">
         #{feedbackReply,jdbcType=VARCHAR},
       </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=INTEGER},
       </if>
-      <if test="createdById != null">
-        #{createdById,jdbcType=BIGINT},
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=BIGINT},
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
       </if>
-      <if test="updatedById != null">
-        #{updatedById,jdbcType=BIGINT},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=BIGINT},
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastUpdate != null">
         #{lastUpdate,jdbcType=TIMESTAMP},
@@ -225,20 +256,32 @@
       <if test="record.feedbackReply != null">
         feedback_reply = #{record.feedbackReply,jdbcType=VARCHAR},
       </if>
+      <if test="record.displayOrder != null">
+        display_order = #{record.displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.createdById != null">
-        created_by_id = #{record.createdById,jdbcType=BIGINT},
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=BIGINT},
       </if>
-      <if test="record.createdTime != null">
-        created_time = #{record.createdTime,jdbcType=BIGINT},
+      <if test="record.createUserName != null">
+        create_user_name = #{record.createUserName,jdbcType=VARCHAR},
       </if>
-      <if test="record.updatedById != null">
-        updated_by_id = #{record.updatedById,jdbcType=BIGINT},
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updatedTime != null">
-        updated_time = #{record.updatedTime,jdbcType=BIGINT},
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateUserName != null">
+        update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.lastUpdate != null">
         last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
@@ -256,11 +299,15 @@
       read_status = #{record.readStatus,jdbcType=BIT},
       content = #{record.content,jdbcType=VARCHAR},
       feedback_reply = #{record.feedbackReply,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=BIT},
-      created_by_id = #{record.createdById,jdbcType=BIGINT},
-      created_time = #{record.createdTime,jdbcType=BIGINT},
-      updated_by_id = #{record.updatedById,jdbcType=BIGINT},
-      updated_time = #{record.updatedTime,jdbcType=BIGINT},
+      display_order = #{record.displayOrder,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       last_update = #{record.lastUpdate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -284,20 +331,32 @@
       <if test="feedbackReply != null">
         feedback_reply = #{feedbackReply,jdbcType=VARCHAR},
       </if>
+      <if test="displayOrder != null">
+        display_order = #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="createdById != null">
-        created_by_id = #{createdById,jdbcType=BIGINT},
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=BIGINT},
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
       </if>
-      <if test="updatedById != null">
-        updated_by_id = #{updatedById,jdbcType=BIGINT},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=BIGINT},
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="lastUpdate != null">
         last_update = #{lastUpdate,jdbcType=TIMESTAMP},
@@ -312,11 +371,15 @@
       read_status = #{readStatus,jdbcType=BIT},
       content = #{content,jdbcType=VARCHAR},
       feedback_reply = #{feedbackReply,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
-      created_by_id = #{createdById,jdbcType=BIGINT},
-      created_time = #{createdTime,jdbcType=BIGINT},
-      updated_by_id = #{updatedById,jdbcType=BIGINT},
-      updated_time = #{updatedTime,jdbcType=BIGINT},
+      display_order = #{displayOrder,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=BIGINT},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       last_update = #{lastUpdate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

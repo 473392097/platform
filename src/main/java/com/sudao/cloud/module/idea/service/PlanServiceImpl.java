@@ -35,14 +35,16 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 	@Override
 	public boolean create(PlanReq obj) {
 		logger.debug("Creating Plan: {}", obj);
-		Long time = new Date().getTime();
+		Date date = new Date();
 
 		PlanDTO planDTO = BeanUtils.copyProperties(obj, PlanDTO.class);
 		planDTO.setStatus(Status.NORMAL);
-		planDTO.setCreatedById(obj.getOperator());
-		planDTO.setCreatedTime(time);
-		planDTO.setUpdatedById(obj.getOperator());
-		planDTO.setUpdatedTime(time);
+        planDTO.setCreateTime(date);
+        planDTO.setCreateUserId(obj.getOperatorId());
+        planDTO.setCreateUserName(obj.getOperatorName());
+        planDTO.setUpdateTime(date);
+        planDTO.setUpdateUserId(obj.getOperatorId());
+        planDTO.setUpdateUserName(obj.getOperatorName());
 
 		return this.planDTOMapper.insertSelective(planDTO) > 0;
 	}
@@ -52,8 +54,9 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 		logger.debug("Updating Plan: {}", obj);
 
 		PlanDTO planDTO = BeanUtils.copyProperties(obj, PlanDTO.class);
-		planDTO.setUpdatedById(obj.getOperator());
-		planDTO.setUpdatedTime(new Date().getTime());
+		planDTO.setUpdateTime(new Date());
+        planDTO.setUpdateUserId(obj.getOperatorId());
+        planDTO.setUpdateUserName(obj.getOperatorName());
 		return this.planDTOMapper.updateByPrimaryKeySelective(planDTO) > 0;
 	}
 

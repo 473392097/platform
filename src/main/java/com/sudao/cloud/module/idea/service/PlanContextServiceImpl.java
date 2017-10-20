@@ -35,14 +35,16 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 	@Override
 	public boolean create(PlanContextReq obj) {
 		logger.debug("Creating PlanContext: {}", obj);
-		Long time = new Date().getTime();
+		Date date = new Date();
 
 		PlanContextDTO planContextDTO = BeanUtils.copyProperties(obj, PlanContextDTO.class);
 		planContextDTO.setStatus(Status.NORMAL);
-		planContextDTO.setCreatedById(obj.getOperator());
-		planContextDTO.setCreatedTime(time);
-		planContextDTO.setUpdatedById(obj.getOperator());
-		planContextDTO.setUpdatedTime(time);
+        planContextDTO.setCreateTime(date);
+        planContextDTO.setCreateUserId(obj.getOperatorId());
+        planContextDTO.setCreateUserName(obj.getOperatorName());
+        planContextDTO.setUpdateTime(date);
+        planContextDTO.setUpdateUserId(obj.getOperatorId());
+        planContextDTO.setUpdateUserName(obj.getOperatorName());
 
 		return this.planContextDTOMapper.insertSelective(planContextDTO) > 0;
 	}
@@ -52,8 +54,9 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 		logger.debug("Updating PlanContext: {}", obj);
 
 		PlanContextDTO planContextDTO = BeanUtils.copyProperties(obj, PlanContextDTO.class);
-		planContextDTO.setUpdatedById(obj.getOperator());
-		planContextDTO.setUpdatedTime(new Date().getTime());
+		planContextDTO.setUpdateTime(new Date());
+        planContextDTO.setUpdateUserId(obj.getOperatorId());
+        planContextDTO.setUpdateUserName(obj.getOperatorName());
 		return this.planContextDTOMapper.updateByPrimaryKeySelective(planContextDTO) > 0;
 	}
 

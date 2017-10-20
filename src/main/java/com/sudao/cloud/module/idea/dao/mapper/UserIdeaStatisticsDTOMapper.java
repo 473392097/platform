@@ -3,12 +3,9 @@ package com.sudao.cloud.module.idea.dao.mapper;
 import com.sudao.cloud.module.idea.dao.dto.UserIdeaStatisticsDTO;
 import com.sudao.cloud.module.idea.dao.dto.UserIdeaStatisticsDTOExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
-@Mapper
 public interface UserIdeaStatisticsDTOMapper {
     long countByExample(UserIdeaStatisticsDTOExample example);
 

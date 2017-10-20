@@ -15,9 +15,9 @@ public class PlanDTO implements Serializable {
 
     private String ownerName;
 
-    private Long catelogId;
+    private Long categoryId;
 
-    private String catelogName;
+    private String categoryName;
 
     private String title;
 
@@ -41,17 +41,23 @@ public class PlanDTO implements Serializable {
 
     private Integer praiseNumber;
 
+    private Integer displayOrder;
+
     private Status status;
 
-    private Long createdById;
+    private Long createUserId;
 
-    private Long createdTime;
+    private String createUserName;
 
-    private Long updatedById;
+    private Date createTime;
 
-    private Long updatedTime;
+    private Long updateUserId;
 
-    private Date lastupdate;
+    private String updateUserName;
+
+    private Date updateTime;
+
+    private Date lastUpdate;
 
     private static final long serialVersionUID = 1L;
 
@@ -87,20 +93,20 @@ public class PlanDTO implements Serializable {
         this.ownerName = ownerName == null ? null : ownerName.trim();
     }
 
-    public Long getCatelogId() {
-        return catelogId;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCatelogId(Long catelogId) {
-        this.catelogId = catelogId;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getCatelogName() {
-        return catelogName;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCatelogName(String catelogName) {
-        this.catelogName = catelogName == null ? null : catelogName.trim();
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName == null ? null : categoryName.trim();
     }
 
     public String getTitle() {
@@ -191,6 +197,14 @@ public class PlanDTO implements Serializable {
         this.praiseNumber = praiseNumber;
     }
 
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
     public Status getStatus() {
         return status;
     }
@@ -199,43 +213,59 @@ public class PlanDTO implements Serializable {
         this.status = status;
     }
 
-    public Long getCreatedById() {
-        return createdById;
+    public Long getCreateUserId() {
+        return createUserId;
     }
 
-    public void setCreatedById(Long createdById) {
-        this.createdById = createdById;
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
-    public Long getCreatedTime() {
-        return createdTime;
+    public String getCreateUserName() {
+        return createUserName;
     }
 
-    public void setCreatedTime(Long createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName == null ? null : createUserName.trim();
     }
 
-    public Long getUpdatedById() {
-        return updatedById;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setUpdatedById(Long updatedById) {
-        this.updatedById = updatedById;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Long getUpdatedTime() {
-        return updatedTime;
+    public Long getUpdateUserId() {
+        return updateUserId;
     }
 
-    public void setUpdatedTime(Long updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateUserId(Long updateUserId) {
+        this.updateUserId = updateUserId;
     }
 
-    public Date getLastupdate() {
-        return lastupdate;
+    public String getUpdateUserName() {
+        return updateUserName;
     }
 
-    public void setLastupdate(Date lastupdate) {
-        this.lastupdate = lastupdate;
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName == null ? null : updateUserName.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

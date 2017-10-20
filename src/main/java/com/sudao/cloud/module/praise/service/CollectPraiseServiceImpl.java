@@ -35,14 +35,16 @@ public class CollectPraiseServiceImpl extends BaseServiceImpl implements Collect
 	@Override
 	public boolean create(CollectPraiseReq obj) {
 		logger.debug("Creating CollectPraise: {}", obj);
-		Long time = new Date().getTime();
+		Date date = new Date();
 
 		CollectPraiseDTO collectPraiseDTO = BeanUtils.copyProperties(obj, CollectPraiseDTO.class);
 		collectPraiseDTO.setStatus(Status.NORMAL);
-		collectPraiseDTO.setCreatedById(obj.getOperator());
-		collectPraiseDTO.setCreatedTime(time);
-		collectPraiseDTO.setUpdatedById(obj.getOperator());
-		collectPraiseDTO.setUpdatedTime(time);
+        collectPraiseDTO.setCreateTime(date);
+        collectPraiseDTO.setCreateUserId(obj.getOperatorId());
+        collectPraiseDTO.setCreateUserName(obj.getOperatorName());
+        collectPraiseDTO.setUpdateTime(date);
+        collectPraiseDTO.setUpdateUserId(obj.getOperatorId());
+        collectPraiseDTO.setUpdateUserName(obj.getOperatorName());
 
 		return this.collectPraiseDTOMapper.insertSelective(collectPraiseDTO) > 0;
 	}
@@ -52,8 +54,9 @@ public class CollectPraiseServiceImpl extends BaseServiceImpl implements Collect
 		logger.debug("Updating CollectPraise: {}", obj);
 
 		CollectPraiseDTO collectPraiseDTO = BeanUtils.copyProperties(obj, CollectPraiseDTO.class);
-		collectPraiseDTO.setUpdatedById(obj.getOperator());
-		collectPraiseDTO.setUpdatedTime(new Date().getTime());
+		collectPraiseDTO.setUpdateTime(new Date());
+        collectPraiseDTO.setUpdateUserId(obj.getOperatorId());
+        collectPraiseDTO.setUpdateUserName(obj.getOperatorName());
 		return this.collectPraiseDTOMapper.updateByPrimaryKeySelective(collectPraiseDTO) > 0;
 	}
 

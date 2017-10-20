@@ -7,12 +7,15 @@
     <result column="context_type" jdbcType="VARCHAR" property="contextType" />
     <result column="value" jdbcType="VARCHAR" property="value" />
     <result column="display_order" jdbcType="INTEGER" property="displayOrder" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="created_by_id" jdbcType="BIGINT" property="createdById" />
-    <result column="created_time" jdbcType="BIGINT" property="createdTime" />
-    <result column="updated_by_id" jdbcType="BIGINT" property="updatedById" />
-    <result column="updated_time" jdbcType="BIGINT" property="updatedTime" />
-    <result column="lastUpdate" jdbcType="TIMESTAMP" property="lastupdate" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    context_id, plan_id, context_type, value, display_order, status, created_by_id, created_time, 
-    updated_by_id, updated_time, lastUpdate
+    context_id, plan_id, context_type, value, display_order, version, status, create_user_id, 
+    create_user_name, create_time, update_user_id, update_user_name, update_time, last_update
   </sql>
   <select id="selectByExample" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanContextDTOExample" resultMap="BaseResultMap">
     select
@@ -108,13 +111,15 @@
   </delete>
   <insert id="insert" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanContextDTO">
     insert into kz_plan_context (context_id, plan_id, context_type, 
-      value, display_order, status, 
-      created_by_id, created_time, updated_by_id, 
-      updated_time, lastUpdate)
+      value, display_order, version, 
+      status, create_user_id, create_user_name, 
+      create_time, update_user_id, update_user_name, 
+      update_time, last_update)
     values (#{contextId,jdbcType=BIGINT}, #{planId,jdbcType=BIGINT}, #{contextType,jdbcType=VARCHAR}, 
-      #{value,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, #{status,jdbcType=BIT}, 
-      #{createdById,jdbcType=BIGINT}, #{createdTime,jdbcType=BIGINT}, #{updatedById,jdbcType=BIGINT}, 
-      #{updatedTime,jdbcType=BIGINT}, #{lastupdate,jdbcType=TIMESTAMP})
+      #{value,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, #{updateUserName,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanContextDTO">
     insert into kz_plan_context
@@ -134,23 +139,32 @@
       <if test="displayOrder != null">
         display_order,
       </if>
+      <if test="version != null">
+        version,
+      </if>
       <if test="status != null">
         status,
       </if>
-      <if test="createdById != null">
-        created_by_id,
+      <if test="createUserId != null">
+        create_user_id,
       </if>
-      <if test="createdTime != null">
-        created_time,
+      <if test="createUserName != null">
+        create_user_name,
       </if>
-      <if test="updatedById != null">
-        updated_by_id,
+      <if test="createTime != null">
+        create_time,
       </if>
-      <if test="updatedTime != null">
-        updated_time,
+      <if test="updateUserId != null">
+        update_user_id,
       </if>
-      <if test="lastupdate != null">
-        lastUpdate,
+      <if test="updateUserName != null">
+        update_user_name,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -169,23 +183,32 @@
       <if test="displayOrder != null">
         #{displayOrder,jdbcType=INTEGER},
       </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=INTEGER},
       </if>
-      <if test="createdById != null">
-        #{createdById,jdbcType=BIGINT},
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=BIGINT},
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
       </if>
-      <if test="updatedById != null">
-        #{updatedById,jdbcType=BIGINT},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=BIGINT},
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=BIGINT},
       </if>
-      <if test="lastupdate != null">
-        #{lastupdate,jdbcType=TIMESTAMP},
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -213,23 +236,32 @@
       <if test="record.displayOrder != null">
         display_order = #{record.displayOrder,jdbcType=INTEGER},
       </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.createdById != null">
-        created_by_id = #{record.createdById,jdbcType=BIGINT},
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=BIGINT},
       </if>
-      <if test="record.createdTime != null">
-        created_time = #{record.createdTime,jdbcType=BIGINT},
+      <if test="record.createUserName != null">
+        create_user_name = #{record.createUserName,jdbcType=VARCHAR},
       </if>
-      <if test="record.updatedById != null">
-        updated_by_id = #{record.updatedById,jdbcType=BIGINT},
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updatedTime != null">
-        updated_time = #{record.updatedTime,jdbcType=BIGINT},
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=BIGINT},
       </if>
-      <if test="record.lastupdate != null">
-        lastUpdate = #{record.lastupdate,jdbcType=TIMESTAMP},
+      <if test="record.updateUserName != null">
+        update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdate != null">
+        last_update = #{record.lastUpdate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -243,12 +275,15 @@
       context_type = #{record.contextType,jdbcType=VARCHAR},
       value = #{record.value,jdbcType=VARCHAR},
       display_order = #{record.displayOrder,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=BIT},
-      created_by_id = #{record.createdById,jdbcType=BIGINT},
-      created_time = #{record.createdTime,jdbcType=BIGINT},
-      updated_by_id = #{record.updatedById,jdbcType=BIGINT},
-      updated_time = #{record.updatedTime,jdbcType=BIGINT},
-      lastUpdate = #{record.lastupdate,jdbcType=TIMESTAMP}
+      version = #{record.version,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      create_user_name = #{record.createUserName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      update_user_name = #{record.updateUserName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      last_update = #{record.lastUpdate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -268,23 +303,32 @@
       <if test="displayOrder != null">
         display_order = #{displayOrder,jdbcType=INTEGER},
       </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="createdById != null">
-        created_by_id = #{createdById,jdbcType=BIGINT},
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
       </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=BIGINT},
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
       </if>
-      <if test="updatedById != null">
-        updated_by_id = #{updatedById,jdbcType=BIGINT},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=BIGINT},
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=BIGINT},
       </if>
-      <if test="lastupdate != null">
-        lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
+      <if test="updateUserName != null">
+        update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where context_id = #{contextId,jdbcType=BIGINT}
@@ -295,12 +339,15 @@
       context_type = #{contextType,jdbcType=VARCHAR},
       value = #{value,jdbcType=VARCHAR},
       display_order = #{displayOrder,jdbcType=INTEGER},
-      status = #{status,jdbcType=BIT},
-      created_by_id = #{createdById,jdbcType=BIGINT},
-      created_time = #{createdTime,jdbcType=BIGINT},
-      updated_by_id = #{updatedById,jdbcType=BIGINT},
-      updated_time = #{updatedTime,jdbcType=BIGINT},
-      lastUpdate = #{lastupdate,jdbcType=TIMESTAMP}
+      version = #{version,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=BIGINT},
+      update_user_name = #{updateUserName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
     where context_id = #{contextId,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanContextDTOExample" resultMap="BaseResultMap">

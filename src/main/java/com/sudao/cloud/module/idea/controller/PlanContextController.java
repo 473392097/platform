@@ -13,10 +13,7 @@ import com.sudao.cloud.module.idea.service.PlanContextService;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.controller.LocalBasicController;
 
-/**
- * 创意的版本内容API
- * @author Spector
- */
+
 @RestPrototypeController
 @RequestMapping("/planContext")
 public class PlanContextController extends LocalBasicController {
@@ -29,7 +26,7 @@ public class PlanContextController extends LocalBasicController {
         setOk(ResultCode.OK);
 
         // create
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         boolean created = planContextService.create(obj);
         if(!created){
             setFail(ResultCode.CREATE_FAIL);
@@ -41,7 +38,7 @@ public class PlanContextController extends LocalBasicController {
     public BaseRecord update(@PathVariable(name = "contextId") final Long contextId, @RequestBody PlanContextReq obj) {
         setOk(ResultCode.OK);
 
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setContextId(contextId);
         boolean updated = planContextService.update(obj);
         if(!updated){
@@ -53,7 +50,7 @@ public class PlanContextController extends LocalBasicController {
     @PostMapping("/delete/{contextId}")
     public BaseRecord delete(@PathVariable(name = "contextId") final Long contextId) {
         PlanContextReq obj = new PlanContextReq();
-        obj.setOperator(getUserId());
+        obj.setOperatorId(getUserId());
         obj.setStatus(Status.DELETED);
         return update(contextId, obj);
     }

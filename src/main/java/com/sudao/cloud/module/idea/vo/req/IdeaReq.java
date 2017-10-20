@@ -6,12 +6,22 @@ import java.io.Serializable;
 
 public class IdeaReq extends IdeaDTO implements Serializable {
 
-    private Long operator;
+    private Long operatorId;
+    private String operatorName;
 
-    public Long getOperator() {
-        return operator;
+    public Long getOperatorId() {
+        return operatorId;
     }
-    public void setOperator(Long operator) {
-        this.operator = operator;
+
+    public void setOperatorId(Long operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public String getOperatorName() {
+        return operatorName;
+    }
+
+    public void setOperatorName(String operatorName) {
+        this.operatorName = operatorName;
     }
 }
