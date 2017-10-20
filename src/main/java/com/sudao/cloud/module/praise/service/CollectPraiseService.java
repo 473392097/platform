@@ -15,20 +15,4 @@ public interface CollectPraiseService extends BaseService {
     public boolean update(CollectPraiseReq obj);
 
     public Page<CollectPraiseResp> find(CollectPraiseQuery query);
-
-
-
-    /*public static class CollectPraiseQuery extends Pagination {
-    }
-    
-    public static class CollectPraise extends CollectPraiseDTO {
-        private Long operator;
-
-        public Long getOperator() {
-            return operator;
-        }
-        public void setOperator(Long operator) {
-            this.operator = operator;
-        }
-    }*/
 }

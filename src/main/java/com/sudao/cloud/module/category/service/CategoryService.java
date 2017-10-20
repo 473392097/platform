@@ -15,20 +15,4 @@ public interface CategoryService extends BaseService {
     public boolean update(CategoryReq obj);
 
     public Page<CategoryResp> find(CategoryQuery query);
-
-
-
-    /*public static class CategoryQuery extends Pagination {
-    }
-    
-    public static class Category extends CategoryDTO {
-        private Long operator;
-
-        public Long getOperator() {
-            return operator;
-        }
-        public void setOperator(Long operator) {
-            this.operator = operator;
-        }
-    }*/
 }

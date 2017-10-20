@@ -15,20 +15,4 @@ public interface UserIdeaStatisticsService extends BaseService {
     public boolean update(UserIdeaStatisticsReq obj);
 
     public Page<UserIdeaStatisticsResp> find(UserIdeaStatisticsQuery query);
-
-
-
-    /*public static class UserIdeaStatisticsQuery extends Pagination {
-    }
-    
-    public static class UserIdeaStatistics extends UserIdeaStatisticsDTO {
-        private Long operator;
-
-        public Long getOperator() {
-            return operator;
-        }
-        public void setOperator(Long operator) {
-            this.operator = operator;
-        }
-    }*/
 }

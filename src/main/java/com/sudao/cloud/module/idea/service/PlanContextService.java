@@ -15,20 +15,4 @@ public interface PlanContextService extends BaseService {
     public boolean update(PlanContextReq obj);
 
     public Page<PlanContextResp> find(PlanContextQuery query);
-
-
-
-    /*public static class PlanContextQuery extends Pagination {
-    }
-    
-    public static class PlanContext extends PlanContextDTO {
-        private Long operator;
-
-        public Long getOperator() {
-            return operator;
-        }
-        public void setOperator(Long operator) {
-            this.operator = operator;
-        }
-    }*/
 }

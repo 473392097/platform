@@ -15,20 +15,4 @@ public interface ReportService extends BaseService {
     public boolean update(ReportReq obj);
 
     public Page<ReportResp> find(ReportQuery query);
-
-
-
-    /*public static class ReportQuery extends Pagination {
-    }
-    
-    public static class Report extends ReportDTO {
-        private Long operator;
-
-        public Long getOperator() {
-            return operator;
-        }
-        public void setOperator(Long operator) {
-            this.operator = operator;
-        }
-    }*/
 }
