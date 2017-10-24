@@ -25,7 +25,7 @@ public class UserIdeaStatisticsServiceImpl extends BaseServiceImpl implements Us
 	@Override
 	public UserIdeaStatisticsResp getById(Long id) {
 		UserIdeaStatisticsDTO userIdeaStatisticsDTO = this.userIdeaStatisticsDTOMapper.selectByPrimaryKey(id);
-		if (userIdeaStatisticsDTO != null && Status.NORMAL.equals(userIdeaStatisticsDTO.getStatus())) {
+		if (userIdeaStatisticsDTO != null && Status.NORMAL.code() == userIdeaStatisticsDTO.getDeleted()) {
 			return BeanUtils.copyProperties(userIdeaStatisticsDTO, UserIdeaStatisticsResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class UserIdeaStatisticsServiceImpl extends BaseServiceImpl implements Us
 		Date date = new Date();
 
 		UserIdeaStatisticsDTO userIdeaStatisticsDTO = BeanUtils.copyProperties(obj, UserIdeaStatisticsDTO.class);
-		userIdeaStatisticsDTO.setStatus(Status.NORMAL);
+		userIdeaStatisticsDTO.setDeleted(Status.NORMAL.code());
         userIdeaStatisticsDTO.setCreateTime(date);
         userIdeaStatisticsDTO.setCreateUserId(obj.getOperatorId());
         userIdeaStatisticsDTO.setCreateUserName(obj.getOperatorName());
@@ -65,7 +65,7 @@ public class UserIdeaStatisticsServiceImpl extends BaseServiceImpl implements Us
 		Page<UserIdeaStatisticsResp> page = new Page<UserIdeaStatisticsResp>(query);
         UserIdeaStatisticsDTOExample example = new UserIdeaStatisticsDTOExample();
         UserIdeaStatisticsDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo(Status.NORMAL);
+        criteria.andDeletedEqualTo(Status.NORMAL.code());
         example.setOrderByClause("id DESC");
 
         long total = this.userIdeaStatisticsDTOMapper.countByExample(example);

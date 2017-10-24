@@ -1,6 +1,5 @@
 package com.sudao.cloud.module.idea.dao.dto;
 
-import com.sudao.cloud.module.base.config.enums.Status;
 import com.sudao.cloud.module.idea.enums.ContextType;
 import java.util.ArrayList;
 import java.util.Date;
@@ -487,63 +486,63 @@ public class PlanContextDTOExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
+        public Criteria andDeletedIsNull() {
+            addCriterion("deleted is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("deleted is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Status value) {
-            addCriterion("status =", value, "status");
+        public Criteria andDeletedEqualTo(Integer value) {
+            addCriterion("deleted =", value, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Status value) {
-            addCriterion("status <>", value, "status");
+        public Criteria andDeletedNotEqualTo(Integer value) {
+            addCriterion("deleted <>", value, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Status value) {
-            addCriterion("status >", value, "status");
+        public Criteria andDeletedGreaterThan(Integer value) {
+            addCriterion("deleted >", value, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Status value) {
-            addCriterion("status >=", value, "status");
+        public Criteria andDeletedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("deleted >=", value, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Status value) {
-            addCriterion("status <", value, "status");
+        public Criteria andDeletedLessThan(Integer value) {
+            addCriterion("deleted <", value, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Status value) {
-            addCriterion("status <=", value, "status");
+        public Criteria andDeletedLessThanOrEqualTo(Integer value) {
+            addCriterion("deleted <=", value, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Status> values) {
-            addCriterion("status in", values, "status");
+        public Criteria andDeletedIn(List<Integer> values) {
+            addCriterion("deleted in", values, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Status> values) {
-            addCriterion("status not in", values, "status");
+        public Criteria andDeletedNotIn(List<Integer> values) {
+            addCriterion("deleted not in", values, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Status value1, Status value2) {
-            addCriterion("status between", value1, value2, "status");
+        public Criteria andDeletedBetween(Integer value1, Integer value2) {
+            addCriterion("deleted between", value1, value2, "deleted");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Status value1, Status value2) {
-            addCriterion("status not between", value1, value2, "status");
+        public Criteria andDeletedNotBetween(Integer value1, Integer value2) {
+            addCriterion("deleted not between", value1, value2, "deleted");
             return (Criteria) this;
         }
 

@@ -51,7 +51,7 @@ public class UserIdeaStatisticsController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         UserIdeaStatisticsReq obj = new UserIdeaStatisticsReq();
         obj.setOperatorId(getUserId());
-        obj.setStatus(Status.DELETED);
+        obj.setDeleted(Status.DELETED.code());
         return update(id, obj);
     }
 

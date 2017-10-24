@@ -51,7 +51,7 @@ public class CollectPraiseController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         CollectPraiseReq obj = new CollectPraiseReq();
         obj.setOperatorId(getUserId());
-        obj.setStatus(Status.DELETED);
+        obj.setDeleted(Status.DELETED.code());
         return update(id, obj);
     }
 

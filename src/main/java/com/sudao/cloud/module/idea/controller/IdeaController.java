@@ -51,7 +51,7 @@ public class IdeaController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "ideaId") final Long ideaId) {
         IdeaReq obj = new IdeaReq();
         obj.setOperatorId(getUserId());
-        obj.setStatus(Status.DELETED);
+        obj.setDeleted(Status.DELETED.code());
         return update(ideaId, obj);
     }
 

@@ -25,7 +25,7 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 	@Override
 	public PlanResp getById(Long planId) {
 		PlanDTO planDTO = this.planDTOMapper.selectByPrimaryKey(planId);
-		if (planDTO != null && Status.NORMAL.equals(planDTO.getStatus())) {
+		if (planDTO != null && Status.NORMAL.code() == planDTO.getDeleted()) {
 			return BeanUtils.copyProperties(planDTO, PlanResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 		Date date = new Date();
 
 		PlanDTO planDTO = BeanUtils.copyProperties(obj, PlanDTO.class);
-		planDTO.setStatus(Status.NORMAL);
+		planDTO.setDeleted(Status.NORMAL.code());
         planDTO.setCreateTime(date);
         planDTO.setCreateUserId(obj.getOperatorId());
         planDTO.setCreateUserName(obj.getOperatorName());
@@ -65,8 +65,8 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 		Page<PlanResp> page = new Page<PlanResp>(query);
         PlanDTOExample example = new PlanDTOExample();
         PlanDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo(Status.NORMAL);
-        example.setOrderByClause("planId DESC");
+        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        example.setOrderByClause("plan_id DESC");
 
         long total = this.planDTOMapper.countByExample(example);
         page.setTotal(total);

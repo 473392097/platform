@@ -22,7 +22,10 @@ import java.util.List;
  * =========================================
  * <p>
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "com.sudao.cloud.module",
+        "com.sudao.cloud.component"
+})
 public class Boot extends ApplicationStarter {
     /******* Fields Area *******/
     /******* Construction Area *******/
@@ -49,7 +52,7 @@ public class Boot extends ApplicationStarter {
     @Override
     public void configComponent(List<IComponentConfig> list) {
         list.add(new com.sudao.cloud.module.ComponentBoot());
-
+        list.add(new com.sudao.cloud.component.user.manager.ComponentBoot());
     }
 
     public static void main(String[] args) {

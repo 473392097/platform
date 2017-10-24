@@ -25,7 +25,7 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 	@Override
 	public PlanContextResp getById(Long contextId) {
 		PlanContextDTO planContextDTO = this.planContextDTOMapper.selectByPrimaryKey(contextId);
-		if (planContextDTO != null && Status.NORMAL.equals(planContextDTO.getStatus())) {
+		if (planContextDTO != null && Status.NORMAL.code() == planContextDTO.getDeleted()) {
 			return BeanUtils.copyProperties(planContextDTO, PlanContextResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 		Date date = new Date();
 
 		PlanContextDTO planContextDTO = BeanUtils.copyProperties(obj, PlanContextDTO.class);
-		planContextDTO.setStatus(Status.NORMAL);
+		planContextDTO.setDeleted(Status.NORMAL.code());
         planContextDTO.setCreateTime(date);
         planContextDTO.setCreateUserId(obj.getOperatorId());
         planContextDTO.setCreateUserName(obj.getOperatorName());
@@ -65,8 +65,8 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 		Page<PlanContextResp> page = new Page<PlanContextResp>(query);
         PlanContextDTOExample example = new PlanContextDTOExample();
         PlanContextDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo(Status.NORMAL);
-        example.setOrderByClause("contextId DESC");
+        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        example.setOrderByClause("context_id DESC");
 
         long total = this.planContextDTOMapper.countByExample(example);
         page.setTotal(total);

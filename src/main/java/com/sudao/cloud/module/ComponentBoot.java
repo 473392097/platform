@@ -21,7 +21,11 @@ import java.util.List;
  * <p>
  */
 @Configuration
-@MapperScan(basePackages = {"com.sudao.cloud.module"})
+@MapperScan(basePackages = {
+        "com.sudao.cloud.module.category.dao",
+        "com.sudao.cloud.module.idea.dao",
+        "com.sudao.cloud.module.praise.dao",
+})
 public class ComponentBoot extends ComponentStarter {
     /******* Fields Area *******/
 

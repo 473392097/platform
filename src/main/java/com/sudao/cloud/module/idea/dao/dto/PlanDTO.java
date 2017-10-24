@@ -1,12 +1,12 @@
 package com.sudao.cloud.module.idea.dao.dto;
 
-import com.sudao.cloud.module.base.config.enums.Status;
 import com.sudao.cloud.module.base.config.enums.YesOrNoEnum;
 import com.sudao.cloud.module.idea.enums.AuditStatus;
+import com.sudao.spec.dto.BaseSpecFields;
 import java.io.Serializable;
 import java.util.Date;
 
-public class PlanDTO implements Serializable {
+public class PlanDTO extends BaseSpecFields implements Serializable {
     private Long planId;
 
     private Long ideaId;
@@ -25,7 +25,7 @@ public class PlanDTO implements Serializable {
 
     private String coverImage;
 
-    private String version;
+    private String planVersion;
 
     private YesOrNoEnum isOrigin;
 
@@ -40,24 +40,6 @@ public class PlanDTO implements Serializable {
     private Date auditTime;
 
     private Integer praiseNumber;
-
-    private Integer displayOrder;
-
-    private Status status;
-
-    private Long createUserId;
-
-    private String createUserName;
-
-    private Date createTime;
-
-    private Long updateUserId;
-
-    private String updateUserName;
-
-    private Date updateTime;
-
-    private Date lastUpdate;
 
     private static final long serialVersionUID = 1L;
 
@@ -133,12 +115,12 @@ public class PlanDTO implements Serializable {
         this.coverImage = coverImage == null ? null : coverImage.trim();
     }
 
-    public String getVersion() {
-        return version;
+    public String getPlanVersion() {
+        return planVersion;
     }
 
-    public void setVersion(String version) {
-        this.version = version == null ? null : version.trim();
+    public void setPlanVersion(String planVersion) {
+        this.planVersion = planVersion == null ? null : planVersion.trim();
     }
 
     public YesOrNoEnum getIsOrigin() {
@@ -195,77 +177,5 @@ public class PlanDTO implements Serializable {
 
     public void setPraiseNumber(Integer praiseNumber) {
         this.praiseNumber = praiseNumber;
-    }
-
-    public Integer getDisplayOrder() {
-        return displayOrder;
-    }
-
-    public void setDisplayOrder(Integer displayOrder) {
-        this.displayOrder = displayOrder;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(Long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public String getCreateUserName() {
-        return createUserName;
-    }
-
-    public void setCreateUserName(String createUserName) {
-        this.createUserName = createUserName == null ? null : createUserName.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdateUserId() {
-        return updateUserId;
-    }
-
-    public void setUpdateUserId(Long updateUserId) {
-        this.updateUserId = updateUserId;
-    }
-
-    public String getUpdateUserName() {
-        return updateUserName;
-    }
-
-    public void setUpdateUserName(String updateUserName) {
-        this.updateUserName = updateUserName == null ? null : updateUserName.trim();
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Date getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Date lastUpdate) {
-        this.lastUpdate = lastUpdate;
     }
 }

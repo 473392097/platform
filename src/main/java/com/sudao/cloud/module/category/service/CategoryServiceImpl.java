@@ -22,23 +22,23 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
     @Autowired
     private CategoryDTOMapper categoryDTOMapper;
 
-	@Override
-	public CategoryResp getById(Long categoryId) {
-		CategoryDTO categoryDTO = this.categoryDTOMapper.selectByPrimaryKey(categoryId);
-		if (categoryDTO != null && Status.NORMAL.equals(categoryDTO.getStatus())) {
-			return BeanUtils.copyProperties(categoryDTO, CategoryResp.class);
-		}
+    @Override
+    public CategoryResp getById(Long categoryId) {
+        CategoryDTO categoryDTO = this.categoryDTOMapper.selectByPrimaryKey(categoryId);
+        if (categoryDTO != null && Status.NORMAL.code() == categoryDTO.getDeleted()) {
+            return BeanUtils.copyProperties(categoryDTO, CategoryResp.class);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public boolean create(CategoryReq obj) {
-		logger.debug("Creating Category: {}", obj);
-		Date date = new Date();
+    @Override
+    public boolean create(CategoryReq obj) {
+        logger.debug("Creating Category: {}", obj);
+        Date date = new Date();
 
-		CategoryDTO categoryDTO = BeanUtils.copyProperties(obj, CategoryDTO.class);
-		categoryDTO.setStatus(Status.NORMAL);
+        CategoryDTO categoryDTO = BeanUtils.copyProperties(obj, CategoryDTO.class);
+        categoryDTO.setDeleted(Status.NORMAL.code());
         categoryDTO.setCreateTime(date);
         categoryDTO.setCreateUserId(obj.getOperatorId());
         categoryDTO.setCreateUserName(obj.getOperatorName());
@@ -46,27 +46,27 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
         categoryDTO.setUpdateUserId(obj.getOperatorId());
         categoryDTO.setUpdateUserName(obj.getOperatorName());
 
-		return this.categoryDTOMapper.insertSelective(categoryDTO) > 0;
-	}
+        return this.categoryDTOMapper.insertSelective(categoryDTO) > 0;
+    }
 
-	@Override
-	public boolean update(CategoryReq obj) {
-		logger.debug("Updating Category: {}", obj);
+    @Override
+    public boolean update(CategoryReq obj) {
+        logger.debug("Updating Category: {}", obj);
 
-		CategoryDTO categoryDTO = BeanUtils.copyProperties(obj, CategoryDTO.class);
-		categoryDTO.setUpdateTime(new Date());
+        CategoryDTO categoryDTO = BeanUtils.copyProperties(obj, CategoryDTO.class);
+        categoryDTO.setUpdateTime(new Date());
         categoryDTO.setUpdateUserId(obj.getOperatorId());
         categoryDTO.setUpdateUserName(obj.getOperatorName());
-		return this.categoryDTOMapper.updateByPrimaryKeySelective(categoryDTO) > 0;
-	}
+        return this.categoryDTOMapper.updateByPrimaryKeySelective(categoryDTO) > 0;
+    }
 
-	@Override
-	public Page<CategoryResp> find(CategoryQuery query) {
-		Page<CategoryResp> page = new Page<CategoryResp>(query);
+    @Override
+    public Page<CategoryResp> find(CategoryQuery query) {
+        Page<CategoryResp> page = new Page<CategoryResp>(query);
         CategoryDTOExample example = new CategoryDTOExample();
         CategoryDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo(Status.NORMAL);
-        example.setOrderByClause("categoryId DESC");
+        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        example.setOrderByClause("category_id DESC");
 
         long total = this.categoryDTOMapper.countByExample(example);
         page.setTotal(total);
@@ -75,5 +75,5 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
             page.setItems(BeanUtils.copyListProperties(list, CategoryResp.class));
         }
         return page;
-	}
+    }
 }

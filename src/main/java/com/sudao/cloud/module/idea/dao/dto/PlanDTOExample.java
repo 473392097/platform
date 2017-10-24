@@ -1,6 +1,5 @@
 package com.sudao.cloud.module.idea.dao.dto;
 
-import com.sudao.cloud.module.base.config.enums.Status;
 import com.sudao.cloud.module.base.config.enums.YesOrNoEnum;
 import com.sudao.cloud.module.idea.enums.AuditStatus;
 import java.util.ArrayList;
@@ -698,73 +697,73 @@ public class PlanDTOExample {
             return (Criteria) this;
         }
 
-        public Criteria andVersionIsNull() {
-            addCriterion("version is null");
+        public Criteria andPlanVersionIsNull() {
+            addCriterion("plan_version is null");
             return (Criteria) this;
         }
 
-        public Criteria andVersionIsNotNull() {
-            addCriterion("version is not null");
+        public Criteria andPlanVersionIsNotNull() {
+            addCriterion("plan_version is not null");
             return (Criteria) this;
         }
 
-        public Criteria andVersionEqualTo(String value) {
-            addCriterion("version =", value, "version");
+        public Criteria andPlanVersionEqualTo(String value) {
+            addCriterion("plan_version =", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionNotEqualTo(String value) {
-            addCriterion("version <>", value, "version");
+        public Criteria andPlanVersionNotEqualTo(String value) {
+            addCriterion("plan_version <>", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionGreaterThan(String value) {
-            addCriterion("version >", value, "version");
+        public Criteria andPlanVersionGreaterThan(String value) {
+            addCriterion("plan_version >", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionGreaterThanOrEqualTo(String value) {
-            addCriterion("version >=", value, "version");
+        public Criteria andPlanVersionGreaterThanOrEqualTo(String value) {
+            addCriterion("plan_version >=", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionLessThan(String value) {
-            addCriterion("version <", value, "version");
+        public Criteria andPlanVersionLessThan(String value) {
+            addCriterion("plan_version <", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionLessThanOrEqualTo(String value) {
-            addCriterion("version <=", value, "version");
+        public Criteria andPlanVersionLessThanOrEqualTo(String value) {
+            addCriterion("plan_version <=", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionLike(String value) {
-            addCriterion("version like", value, "version");
+        public Criteria andPlanVersionLike(String value) {
+            addCriterion("plan_version like", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionNotLike(String value) {
-            addCriterion("version not like", value, "version");
+        public Criteria andPlanVersionNotLike(String value) {
+            addCriterion("plan_version not like", value, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionIn(List<String> values) {
-            addCriterion("version in", values, "version");
+        public Criteria andPlanVersionIn(List<String> values) {
+            addCriterion("plan_version in", values, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionNotIn(List<String> values) {
-            addCriterion("version not in", values, "version");
+        public Criteria andPlanVersionNotIn(List<String> values) {
+            addCriterion("plan_version not in", values, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionBetween(String value1, String value2) {
-            addCriterion("version between", value1, value2, "version");
+        public Criteria andPlanVersionBetween(String value1, String value2) {
+            addCriterion("plan_version between", value1, value2, "planVersion");
             return (Criteria) this;
         }
 
-        public Criteria andVersionNotBetween(String value1, String value2) {
-            addCriterion("version not between", value1, value2, "version");
+        public Criteria andPlanVersionNotBetween(String value1, String value2) {
+            addCriterion("plan_version not between", value1, value2, "planVersion");
             return (Criteria) this;
         }
 
@@ -1268,63 +1267,123 @@ public class PlanDTOExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
+        public Criteria andVersionIsNull() {
+            addCriterion("version is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
+        public Criteria andVersionIsNotNull() {
+            addCriterion("version is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Status value) {
-            addCriterion("status =", value, "status");
+        public Criteria andVersionEqualTo(Integer value) {
+            addCriterion("version =", value, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Status value) {
-            addCriterion("status <>", value, "status");
+        public Criteria andVersionNotEqualTo(Integer value) {
+            addCriterion("version <>", value, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Status value) {
-            addCriterion("status >", value, "status");
+        public Criteria andVersionGreaterThan(Integer value) {
+            addCriterion("version >", value, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Status value) {
-            addCriterion("status >=", value, "status");
+        public Criteria andVersionGreaterThanOrEqualTo(Integer value) {
+            addCriterion("version >=", value, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Status value) {
-            addCriterion("status <", value, "status");
+        public Criteria andVersionLessThan(Integer value) {
+            addCriterion("version <", value, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Status value) {
-            addCriterion("status <=", value, "status");
+        public Criteria andVersionLessThanOrEqualTo(Integer value) {
+            addCriterion("version <=", value, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Status> values) {
-            addCriterion("status in", values, "status");
+        public Criteria andVersionIn(List<Integer> values) {
+            addCriterion("version in", values, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Status> values) {
-            addCriterion("status not in", values, "status");
+        public Criteria andVersionNotIn(List<Integer> values) {
+            addCriterion("version not in", values, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Status value1, Status value2) {
-            addCriterion("status between", value1, value2, "status");
+        public Criteria andVersionBetween(Integer value1, Integer value2) {
+            addCriterion("version between", value1, value2, "version");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Status value1, Status value2) {
-            addCriterion("status not between", value1, value2, "status");
+        public Criteria andVersionNotBetween(Integer value1, Integer value2) {
+            addCriterion("version not between", value1, value2, "version");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNull() {
+            addCriterion("deleted is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIsNotNull() {
+            addCriterion("deleted is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedEqualTo(Integer value) {
+            addCriterion("deleted =", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotEqualTo(Integer value) {
+            addCriterion("deleted <>", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThan(Integer value) {
+            addCriterion("deleted >", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("deleted >=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThan(Integer value) {
+            addCriterion("deleted <", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedLessThanOrEqualTo(Integer value) {
+            addCriterion("deleted <=", value, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedIn(List<Integer> values) {
+            addCriterion("deleted in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotIn(List<Integer> values) {
+            addCriterion("deleted not in", values, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedBetween(Integer value1, Integer value2) {
+            addCriterion("deleted between", value1, value2, "deleted");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeletedNotBetween(Integer value1, Integer value2) {
+            addCriterion("deleted not between", value1, value2, "deleted");
             return (Criteria) this;
         }
 

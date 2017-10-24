@@ -51,7 +51,7 @@ public class CategoryController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "categoryId") final Long categoryId) {
         CategoryReq obj = new CategoryReq();
         obj.setOperatorId(getUserId());
-        obj.setStatus(Status.DELETED);
+        obj.setDeleted(Status.DELETED.code());
         return update(categoryId, obj);
     }
 

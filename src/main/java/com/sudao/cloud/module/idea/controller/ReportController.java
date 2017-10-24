@@ -51,7 +51,7 @@ public class ReportController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "reportId") final Long reportId) {
         ReportReq obj = new ReportReq();
         obj.setOperatorId(getUserId());
-        obj.setStatus(Status.DELETED);
+        obj.setDeleted(Status.DELETED.code());
         return update(reportId, obj);
     }
 

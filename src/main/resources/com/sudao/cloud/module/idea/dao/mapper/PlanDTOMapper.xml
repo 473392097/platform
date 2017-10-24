@@ -11,7 +11,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="cover_image" jdbcType="VARCHAR" property="coverImage" />
-    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="plan_version" jdbcType="VARCHAR" property="planVersion" />
     <result column="is_origin" jdbcType="BIT" property="isOrigin" />
     <result column="iteration_description" jdbcType="VARCHAR" property="iterationDescription" />
     <result column="audit" jdbcType="BIT" property="audit" />
@@ -20,7 +20,8 @@
     <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
     <result column="praise_number" jdbcType="INTEGER" property="praiseNumber" />
     <result column="display_order" jdbcType="INTEGER" property="displayOrder" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
     <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
     <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -89,9 +90,9 @@
   </sql>
   <sql id="Base_Column_List">
     plan_id, idea_id, owner_id, owner_name, category_id, category_name, title, description, 
-    cover_image, version, is_origin, iteration_description, audit, audit_user_id, audit_user_name, 
-    audit_time, praise_number, display_order, status, create_user_id, create_user_name, 
-    create_time, update_user_id, update_user_name, update_time, last_update
+    cover_image, plan_version, is_origin, iteration_description, audit, audit_user_id, 
+    audit_user_name, audit_time, praise_number, display_order, version, deleted, create_user_id, 
+    create_user_name, create_time, update_user_id, update_user_name, update_time, last_update
   </sql>
   <select id="selectByExample" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTOExample" resultMap="BaseResultMap">
     select
@@ -127,21 +128,23 @@
     insert into kz_plan (plan_id, idea_id, owner_id, 
       owner_name, category_id, category_name, 
       title, description, cover_image, 
-      version, is_origin, iteration_description, 
+      plan_version, is_origin, iteration_description, 
       audit, audit_user_id, audit_user_name, 
       audit_time, praise_number, display_order, 
-      status, create_user_id, create_user_name, 
-      create_time, update_user_id, update_user_name, 
-      update_time, last_update)
+      version, deleted, create_user_id, 
+      create_user_name, create_time, update_user_id, 
+      update_user_name, update_time, last_update
+      )
     values (#{planId,jdbcType=BIGINT}, #{ideaId,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT}, 
       #{ownerName,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR}, 
       #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, 
-      #{version,jdbcType=VARCHAR}, #{isOrigin,jdbcType=BIT}, #{iterationDescription,jdbcType=VARCHAR}, 
+      #{planVersion,jdbcType=VARCHAR}, #{isOrigin,jdbcType=BIT}, #{iterationDescription,jdbcType=VARCHAR}, 
       #{audit,jdbcType=BIT}, #{auditUserId,jdbcType=BIGINT}, #{auditUserName,jdbcType=VARCHAR}, 
       #{auditTime,jdbcType=TIMESTAMP}, #{praiseNumber,jdbcType=INTEGER}, #{displayOrder,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, #{updateUserName,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP})
+      #{version,jdbcType=INTEGER}, #{deleted,jdbcType=INTEGER}, #{createUserId,jdbcType=BIGINT}, 
+      #{createUserName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.sudao.cloud.module.idea.dao.dto.PlanDTO">
     insert into kz_plan
@@ -173,8 +176,8 @@
       <if test="coverImage != null">
         cover_image,
       </if>
-      <if test="version != null">
-        version,
+      <if test="planVersion != null">
+        plan_version,
       </if>
       <if test="isOrigin != null">
         is_origin,
@@ -200,8 +203,11 @@
       <if test="displayOrder != null">
         display_order,
       </if>
-      <if test="status != null">
-        status,
+      <if test="version != null">
+        version,
+      </if>
+      <if test="deleted != null">
+        deleted,
       </if>
       <if test="createUserId != null">
         create_user_id,
@@ -253,8 +259,8 @@
       <if test="coverImage != null">
         #{coverImage,jdbcType=VARCHAR},
       </if>
-      <if test="version != null">
-        #{version,jdbcType=VARCHAR},
+      <if test="planVersion != null">
+        #{planVersion,jdbcType=VARCHAR},
       </if>
       <if test="isOrigin != null">
         #{isOrigin,jdbcType=BIT},
@@ -280,8 +286,11 @@
       <if test="displayOrder != null">
         #{displayOrder,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
       </if>
       <if test="createUserId != null">
         #{createUserId,jdbcType=BIGINT},
@@ -342,8 +351,8 @@
       <if test="record.coverImage != null">
         cover_image = #{record.coverImage,jdbcType=VARCHAR},
       </if>
-      <if test="record.version != null">
-        version = #{record.version,jdbcType=VARCHAR},
+      <if test="record.planVersion != null">
+        plan_version = #{record.planVersion,jdbcType=VARCHAR},
       </if>
       <if test="record.isOrigin != null">
         is_origin = #{record.isOrigin,jdbcType=BIT},
@@ -369,8 +378,11 @@
       <if test="record.displayOrder != null">
         display_order = #{record.displayOrder,jdbcType=INTEGER},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
       </if>
       <if test="record.createUserId != null">
         create_user_id = #{record.createUserId,jdbcType=BIGINT},
@@ -409,7 +421,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       cover_image = #{record.coverImage,jdbcType=VARCHAR},
-      version = #{record.version,jdbcType=VARCHAR},
+      plan_version = #{record.planVersion,jdbcType=VARCHAR},
       is_origin = #{record.isOrigin,jdbcType=BIT},
       iteration_description = #{record.iterationDescription,jdbcType=VARCHAR},
       audit = #{record.audit,jdbcType=BIT},
@@ -418,7 +430,8 @@
       audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
       praise_number = #{record.praiseNumber,jdbcType=INTEGER},
       display_order = #{record.displayOrder,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=INTEGER},
+      deleted = #{record.deleted,jdbcType=INTEGER},
       create_user_id = #{record.createUserId,jdbcType=BIGINT},
       create_user_name = #{record.createUserName,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -457,8 +470,8 @@
       <if test="coverImage != null">
         cover_image = #{coverImage,jdbcType=VARCHAR},
       </if>
-      <if test="version != null">
-        version = #{version,jdbcType=VARCHAR},
+      <if test="planVersion != null">
+        plan_version = #{planVersion,jdbcType=VARCHAR},
       </if>
       <if test="isOrigin != null">
         is_origin = #{isOrigin,jdbcType=BIT},
@@ -484,8 +497,11 @@
       <if test="displayOrder != null">
         display_order = #{displayOrder,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
       </if>
       <if test="createUserId != null">
         create_user_id = #{createUserId,jdbcType=BIGINT},
@@ -521,7 +537,7 @@
       title = #{title,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       cover_image = #{coverImage,jdbcType=VARCHAR},
-      version = #{version,jdbcType=VARCHAR},
+      plan_version = #{planVersion,jdbcType=VARCHAR},
       is_origin = #{isOrigin,jdbcType=BIT},
       iteration_description = #{iterationDescription,jdbcType=VARCHAR},
       audit = #{audit,jdbcType=BIT},
@@ -530,7 +546,8 @@
       audit_time = #{auditTime,jdbcType=TIMESTAMP},
       praise_number = #{praiseNumber,jdbcType=INTEGER},
       display_order = #{displayOrder,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
       create_user_id = #{createUserId,jdbcType=BIGINT},
       create_user_name = #{createUserName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

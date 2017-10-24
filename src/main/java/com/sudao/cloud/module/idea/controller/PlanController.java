@@ -51,7 +51,7 @@ public class PlanController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "planId") final Long planId) {
         PlanReq obj = new PlanReq();
         obj.setOperatorId(getUserId());
-        obj.setStatus(Status.DELETED);
+        obj.setDeleted(Status.DELETED.code());
         return update(planId, obj);
     }
 

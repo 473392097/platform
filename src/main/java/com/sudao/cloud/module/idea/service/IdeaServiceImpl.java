@@ -25,7 +25,7 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 	@Override
 	public IdeaResp getById(Long ideaId) {
 		IdeaDTO ideaDTO = this.ideaDTOMapper.selectByPrimaryKey(ideaId);
-		if (ideaDTO != null && Status.NORMAL.equals(ideaDTO.getStatus())) {
+		if (ideaDTO != null && Status.NORMAL.code() == ideaDTO.getDeleted()) {
 			return BeanUtils.copyProperties(ideaDTO, IdeaResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 		Date date = new Date();
 
 		IdeaDTO ideaDTO = BeanUtils.copyProperties(obj, IdeaDTO.class);
-		ideaDTO.setStatus(Status.NORMAL);
+		ideaDTO.setDeleted(Status.NORMAL.code());
         ideaDTO.setCreateTime(date);
         ideaDTO.setCreateUserId(obj.getOperatorId());
         ideaDTO.setCreateUserName(obj.getOperatorName());
@@ -65,8 +65,8 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 		Page<IdeaResp> page = new Page<IdeaResp>(query);
         IdeaDTOExample example = new IdeaDTOExample();
         IdeaDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo(Status.NORMAL);
-        example.setOrderByClause("ideaId DESC");
+        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        example.setOrderByClause("idea_id DESC");
 
         long total = this.ideaDTOMapper.countByExample(example);
         page.setTotal(total);

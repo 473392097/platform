@@ -11,7 +11,7 @@
     <result column="keywords" jdbcType="VARCHAR" property="keywords" />
     <result column="display_order" jdbcType="INTEGER" property="displayOrder" />
     <result column="version" jdbcType="INTEGER" property="version" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
     <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
     <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -80,8 +80,8 @@
   </sql>
   <sql id="Base_Column_List">
     category_id, parent_id, name, code, description, image, keywords, display_order, 
-    version, status, create_user_id, create_user_name, create_time, update_user_id, update_user_name, 
-    update_time, last_update
+    version, deleted, create_user_id, create_user_name, create_time, update_user_id, 
+    update_user_name, update_time, last_update
   </sql>
   <select id="selectByExample" parameterType="com.sudao.cloud.module.category.dao.dto.CategoryDTOExample" resultMap="BaseResultMap">
     select
@@ -117,13 +117,13 @@
     insert into cloud_component_category (category_id, parent_id, name, 
       code, description, image, 
       keywords, display_order, version, 
-      status, create_user_id, create_user_name, 
+      deleted, create_user_id, create_user_name, 
       create_time, update_user_id, update_user_name, 
       update_time, last_update)
     values (#{categoryId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
       #{keywords,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, 
+      #{deleted,jdbcType=INTEGER}, #{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, #{updateUserName,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP})
   </insert>
@@ -157,8 +157,8 @@
       <if test="version != null">
         version,
       </if>
-      <if test="status != null">
-        status,
+      <if test="deleted != null">
+        deleted,
       </if>
       <if test="createUserId != null">
         create_user_id,
@@ -210,8 +210,8 @@
       <if test="version != null">
         #{version,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
       </if>
       <if test="createUserId != null">
         #{createUserId,jdbcType=BIGINT},
@@ -272,8 +272,8 @@
       <if test="record.version != null">
         version = #{record.version,jdbcType=INTEGER},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=INTEGER},
       </if>
       <if test="record.createUserId != null">
         create_user_id = #{record.createUserId,jdbcType=BIGINT},
@@ -312,7 +312,7 @@
       keywords = #{record.keywords,jdbcType=VARCHAR},
       display_order = #{record.displayOrder,jdbcType=INTEGER},
       version = #{record.version,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER},
+      deleted = #{record.deleted,jdbcType=INTEGER},
       create_user_id = #{record.createUserId,jdbcType=BIGINT},
       create_user_name = #{record.createUserName,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -351,8 +351,8 @@
       <if test="version != null">
         version = #{version,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
       </if>
       <if test="createUserId != null">
         create_user_id = #{createUserId,jdbcType=BIGINT},
@@ -388,7 +388,7 @@
       keywords = #{keywords,jdbcType=VARCHAR},
       display_order = #{displayOrder,jdbcType=INTEGER},
       version = #{version,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
       create_user_id = #{createUserId,jdbcType=BIGINT},
       create_user_name = #{createUserName,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
