@@ -1,0 +1,8 @@
+# auth
+authExcludes:
+- /image
+- /client/register
+- /login
+- /logout
+- /managerUser
+- /category

@@ -1,0 +1,7 @@
+###########################################
+# 文件存储根目录
+filestorage.root: E://test/filestorage/
+# redis服务
+redis.host: 127.0.0.1
+redis.port: 6379
+

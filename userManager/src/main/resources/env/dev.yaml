@@ -1,0 +1,20 @@
+###########################################
+# 基础域名
+site.url: "http://vacances.sudaotech.com"
+###########################################
+
+###########################################
+# redis服务
+redis.host: localhost
+redis.port: 6380
+
+
+
+###########################################
+# elasticsearch搜索服务配置
+elasticsearch.cluster.nodes: "127.0.0.1:9300"
+elasticsearch.index.name: hejia_dev
+
+###########################################
+# 是否开启短信：true | false
+sms.enabled: true
