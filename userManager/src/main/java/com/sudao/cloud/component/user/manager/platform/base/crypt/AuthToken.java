@@ -18,22 +18,21 @@ public class AuthToken {
 
     public final long userId;
     public final long type;
-    /*public final long active;
-    public final long expiry;*/
     public final String rand;
-    public boolean remenber = false;
+    public boolean remember = false;
+
     
 	/**
      * @param rand 随机数
      * @param userId 用户id
      * @param type 用户类型(0-平台用户， 1-客户端)
      */
-    public AuthToken(long userId, long type, String rand, boolean remenber) {
+    public AuthToken(long userId, long type, String rand, boolean remember) {
         super();
         this.userId = userId;
         this.type = type;
         this.rand = rand;
-        this.remenber = remenber;
+        this.remember = remember;
     }
 
     /**
@@ -47,7 +46,7 @@ public class AuthToken {
                 .append(this.userId).append(SEPARATOR)
                 .append(this.type).append(SEPARATOR)
                 .append(this.rand).append(SEPARATOR)
-                .append(this.remenber)
+                .append(this.remember)
                 .toString();
         String token = TOKEN_ENCRYPTION.encrypt(unencrypted);
         return token;
@@ -89,25 +88,12 @@ public class AuthToken {
                 .append(", rand=")
                 .append(rand)
                 .append(", remenber=")
-                .append(remenber)
+                .append(remember)
                 .append("]");
         return builder.toString();
     }
     
     public static void main(String[] args) {
-    	/*long now = System.currentTimeMillis()-900000000;
-    	long expiry = System.currentTimeMillis()+900000000;
-    	 String unencrypted = new StringBuilder()
-                 .append(1001L).append(SEPARATOR)
-                 .append(2L).append(SEPARATOR)
-                 .append(now).append(SEPARATOR)
-                 .append(expiry).append(SEPARATOR)
-                 .append("rand").toString();
-         String token = TOKEN_ENCRYPTION.encrypt(unencrypted);
-         System.out.println(token);
-         
-         AuthToken authToken = parse(token);
-         System.out.println(isActive(authToken));*/
 
         String unencrypted = new StringBuilder()
                 .append(1001L).append(SEPARATOR)

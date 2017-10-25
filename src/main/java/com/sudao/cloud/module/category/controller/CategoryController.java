@@ -1,7 +1,7 @@
 package com.sudao.cloud.module.category.controller;
 
 import com.sudao.cloud.module.base.config.ResultCode;
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.category.vo.req.CategoryQuery;
 import com.sudao.cloud.module.category.vo.req.CategoryReq;
 import com.sudao.cloud.module.category.vo.resp.CategoryResp;
@@ -51,7 +51,7 @@ public class CategoryController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "categoryId") final Long categoryId) {
         CategoryReq obj = new CategoryReq();
         obj.setOperatorId(getUserId());
-        obj.setDeleted(Status.DELETED.code());
+        obj.setDeleted(Deleted.DELETED.code());
         return update(categoryId, obj);
     }
 

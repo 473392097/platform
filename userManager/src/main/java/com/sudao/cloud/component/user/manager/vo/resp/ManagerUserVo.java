@@ -1,4 +1,7 @@
-package com.sudao.cloud.component.user.manager.controller.vo;
+package com.sudao.cloud.component.user.manager.vo.resp;
+
+import com.sudao.cloud.component.user.manager.platform.common.utils.BeanUtils;
+import com.sudao.cloud.component.user.manager.service.ManagerUserService;
 
 /**
  * 响应模型
@@ -12,6 +15,8 @@ public interface ManagerUserVo {
     class SimpleUserInfo {
 
         private Long managerUserId;
+
+        private String image;
 
         private String loginName;
 
@@ -79,6 +84,12 @@ public interface ManagerUserVo {
 
         public void setRemark(String remark) {
             this.remark = remark;
+        }
+
+
+        public static SimpleUserInfo parse(ManagerUserService.ManagerUser managerUser) {
+            SimpleUserInfo target = BeanUtils.copyProperties(managerUser, SimpleUserInfo.class);
+            return target;
         }
     }
 }

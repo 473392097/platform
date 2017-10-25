@@ -1,6 +1,6 @@
 package com.sudao.cloud.module.idea.service;
 
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
@@ -25,7 +25,7 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 	@Override
 	public PlanResp getById(Long planId) {
 		PlanDTO planDTO = this.planDTOMapper.selectByPrimaryKey(planId);
-		if (planDTO != null && Status.NORMAL.code() == planDTO.getDeleted()) {
+		if (planDTO != null && Deleted.NORMAL.code() == planDTO.getDeleted()) {
 			return BeanUtils.copyProperties(planDTO, PlanResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 		Date date = new Date();
 
 		PlanDTO planDTO = BeanUtils.copyProperties(obj, PlanDTO.class);
-		planDTO.setDeleted(Status.NORMAL.code());
+		planDTO.setDeleted(Deleted.NORMAL.code());
         planDTO.setCreateTime(date);
         planDTO.setCreateUserId(obj.getOperatorId());
         planDTO.setCreateUserName(obj.getOperatorName());
@@ -65,7 +65,7 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
 		Page<PlanResp> page = new Page<PlanResp>(query);
         PlanDTOExample example = new PlanDTOExample();
         PlanDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("plan_id DESC");
 
         long total = this.planDTOMapper.countByExample(example);

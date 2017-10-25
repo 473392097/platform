@@ -1,6 +1,6 @@
 package com.sudao.cloud.module.idea.service;
 
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
@@ -25,7 +25,7 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 	@Override
 	public IdeaResp getById(Long ideaId) {
 		IdeaDTO ideaDTO = this.ideaDTOMapper.selectByPrimaryKey(ideaId);
-		if (ideaDTO != null && Status.NORMAL.code() == ideaDTO.getDeleted()) {
+		if (ideaDTO != null && Deleted.NORMAL.code() == ideaDTO.getDeleted()) {
 			return BeanUtils.copyProperties(ideaDTO, IdeaResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 		Date date = new Date();
 
 		IdeaDTO ideaDTO = BeanUtils.copyProperties(obj, IdeaDTO.class);
-		ideaDTO.setDeleted(Status.NORMAL.code());
+		ideaDTO.setDeleted(Deleted.NORMAL.code());
         ideaDTO.setCreateTime(date);
         ideaDTO.setCreateUserId(obj.getOperatorId());
         ideaDTO.setCreateUserName(obj.getOperatorName());
@@ -65,7 +65,7 @@ public class IdeaServiceImpl extends BaseServiceImpl implements IdeaService {
 		Page<IdeaResp> page = new Page<IdeaResp>(query);
         IdeaDTOExample example = new IdeaDTOExample();
         IdeaDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("idea_id DESC");
 
         long total = this.ideaDTOMapper.countByExample(example);

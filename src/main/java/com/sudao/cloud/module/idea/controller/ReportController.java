@@ -1,7 +1,7 @@
 package com.sudao.cloud.module.idea.controller;
 
 import com.sudao.cloud.module.base.config.ResultCode;
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.idea.vo.req.ReportQuery;
 import com.sudao.cloud.module.idea.vo.req.ReportReq;
 import com.sudao.cloud.module.idea.vo.resp.ReportResp;
@@ -51,7 +51,7 @@ public class ReportController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "reportId") final Long reportId) {
         ReportReq obj = new ReportReq();
         obj.setOperatorId(getUserId());
-        obj.setDeleted(Status.DELETED.code());
+        obj.setDeleted(Deleted.DELETED.code());
         return update(reportId, obj);
     }
 

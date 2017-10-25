@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : 65001
 
- Date: 23/10/2017 15:03:27
+ Date: 25/10/2017 22:16:25
 */
 
 SET NAMES utf8mb4;
@@ -40,7 +40,7 @@ CREATE TABLE `cloud_component_category` (
   `update_time` datetime DEFAULT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Table structure for cloud_component_collect_praise
@@ -63,7 +63,7 @@ CREATE TABLE `cloud_component_collect_praise` (
   `update_time` datetime DEFAULT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户收藏、点赞';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户收藏、点赞';
 
 -- ----------------------------
 -- Table structure for cloud_component_feedback
@@ -110,7 +110,7 @@ CREATE TABLE `cloud_component_information` (
   `update_time` datetime DEFAULT NULL,
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`information_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典\n 多行聚合类型设计方式, 以行冗余的方式描述字典项(type)所包含的值列表, 每条值(value_code)为一条数据';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据字典\n 多行聚合类型设计方式, 以行冗余的方式描述字典项(type)所包含的值列表, 每条值(value_code)为一条数据';
 
 -- ----------------------------
 -- Table structure for cloud_component_report
@@ -139,6 +139,32 @@ CREATE TABLE `cloud_component_report` (
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='创意举报';
+
+-- ----------------------------
+-- Table structure for cloud_component_user
+-- ----------------------------
+DROP TABLE IF EXISTS `cloud_component_user`;
+CREATE TABLE `cloud_component_user` (
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `nike_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '姓名',
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '密码',
+  `gender` int(2) DEFAULT NULL COMMENT '0.保密,1:男,2:女',
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '邮箱',
+  `telephone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '联系电话',
+  `image` varchar(500) DEFAULT NULL COMMENT '头像',
+  `profession` varchar(100) DEFAULT NULL COMMENT '职业',
+  `display_order` int(11) DEFAULT '0' COMMENT '列表显示顺序',
+  `version` int(11) NOT NULL DEFAULT '0',
+  `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '通用状态 Status: 1:正常, 2:已删除',
+  `create_user_id` bigint(20) DEFAULT '0',
+  `create_user_name` varchar(100) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_user_id` bigint(20) DEFAULT '0',
+  `update_user_name` varchar(100) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Table structure for kz_idea

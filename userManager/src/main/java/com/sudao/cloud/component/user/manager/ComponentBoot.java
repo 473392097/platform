@@ -1,5 +1,6 @@
 package com.sudao.cloud.component.user.manager;
 
+import com.sudao.cloud.component.user.manager.core.ManagerUserComponentExceptionHandler;
 import com.sudao.cloud.component.user.manager.platform.base.interceptor.AuthTokenHandler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,8 @@ public class ComponentBoot extends ComponentStarter {
     @Override
     public void configHandler(List<Handler> list) {
         list.add(new AuthTokenHandler());
+        list.add(new ManagerUserComponentExceptionHandler());
+
     }
 
     @Override

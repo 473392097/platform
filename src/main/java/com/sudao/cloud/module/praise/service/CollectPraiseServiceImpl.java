@@ -1,6 +1,6 @@
 package com.sudao.cloud.module.praise.service;
 
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
@@ -25,7 +25,7 @@ public class CollectPraiseServiceImpl extends BaseServiceImpl implements Collect
 	@Override
 	public CollectPraiseResp getById(Long id) {
 		CollectPraiseDTO collectPraiseDTO = this.collectPraiseDTOMapper.selectByPrimaryKey(id);
-		if (collectPraiseDTO != null && Status.NORMAL.code() == collectPraiseDTO.getDeleted()) {
+		if (collectPraiseDTO != null && Deleted.NORMAL.code() == collectPraiseDTO.getDeleted()) {
 			return BeanUtils.copyProperties(collectPraiseDTO, CollectPraiseResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class CollectPraiseServiceImpl extends BaseServiceImpl implements Collect
 		Date date = new Date();
 
 		CollectPraiseDTO collectPraiseDTO = BeanUtils.copyProperties(obj, CollectPraiseDTO.class);
-		collectPraiseDTO.setDeleted(Status.NORMAL.code());
+		collectPraiseDTO.setDeleted(Deleted.NORMAL.code());
         collectPraiseDTO.setCreateTime(date);
         collectPraiseDTO.setCreateUserId(obj.getOperatorId());
         collectPraiseDTO.setCreateUserName(obj.getOperatorName());
@@ -65,7 +65,7 @@ public class CollectPraiseServiceImpl extends BaseServiceImpl implements Collect
 		Page<CollectPraiseResp> page = new Page<CollectPraiseResp>(query);
         CollectPraiseDTOExample example = new CollectPraiseDTOExample();
         CollectPraiseDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("id DESC");
 
         long total = this.collectPraiseDTOMapper.countByExample(example);

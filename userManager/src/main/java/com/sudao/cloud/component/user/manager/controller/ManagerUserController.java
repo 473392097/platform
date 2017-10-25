@@ -1,6 +1,10 @@
 package com.sudao.cloud.component.user.manager.controller;
 
-import com.sudao.cloud.component.user.manager.controller.vo.ManagerUserVo;
+import com.sudao.cloud.component.user.manager.exception.ManagerUserException;
+import com.sudao.cloud.component.user.manager.platform.common.utils.CookieUtils;
+import com.sudao.cloud.component.user.manager.platform.common.utils.RandUtil;
+import com.sudao.cloud.component.user.manager.vo.resp.LoginResp;
+import com.sudao.cloud.component.user.manager.vo.resp.ManagerUserVo;
 import com.sudao.cloud.component.user.manager.platform.base.crypt.AuthToken;
 import com.sudao.cloud.component.user.manager.platform.common.cons.Constants;
 import com.sudao.cloud.component.user.manager.platform.common.utils.BeanUtils;
@@ -40,6 +44,75 @@ public class ManagerUserController extends LocalBasicController {
     @Autowired
     private UserRoleService userRoleService;
 
+    /**
+     * 用户登录,
+     * @param loginUser a
+     * @return LoginResp
+     */
+    @PostMapping("/login")
+    public LoginResp login(@RequestBody final ManagerUserService.LoginUser loginUser) throws ManagerUserException {
+
+        ManagerUser user = null;
+        // login by username
+        if (loginUser != null && !StringUtils.isBlank(loginUser.getLoginName())) {
+            user = this.managerUserService.getByLoginName(loginUser.getLoginName());
+        }
+        if (user == null || ! PasswordCrypt.encrypt(loginUser.getLoginPwd()).equals(user.getPassword())) {
+            logger.warn("password incorrect");
+            throw new ManagerUserException(ResultCode.AUTH_FAILED);
+        }
+        AuthToken authToken = new AuthToken(user.getManagerUserId(), Constants.UserType.ADMIN, RandUtil.rand() ,loginUser.isRemenber());
+        super.setCookie(Constants.AUTH_TOKEN_NAME, authToken.token(), "/", CookieUtils.getCookieDomain(),Constants.AUTH_TOKEN_AGE_MAX);
+
+        return new LoginResp().setToken(authToken.token()).setUser(user);
+    }
+
+
+    @PostMapping("/newPassword")
+    public void updatePass(@RequestBody final ManagerUserService.UpdatePassword updatePassword) throws ManagerUserException {
+
+        if (updatePassword == null || updatePassword.getOldPassword() == null ||updatePassword.getNewPassword() == null) {
+            throw new ManagerUserException(ResultCode.NULL_PARAMETER);
+        }
+        //当前登录的用户ID
+        Long userId = super.sessionTokenResolver.getSessionQuietly(super.request).getUserId();
+        if (userId == null || userId == 0) {
+            throw new ManagerUserException(ResultCode.UNAUTHORIZED);
+
+        }
+
+        //需要被修改密码的用户ID
+        Long targetUserId = updatePassword.getUserId();
+        if (targetUserId != null && targetUserId != 0) {
+            userId = targetUserId;
+        }
+        //获取指定 ID 的用户信息
+        ManagerUser user = managerUserService.getById(userId);
+        if (user ==  null) {
+            throw new ManagerUserException(ResultCode.UNAUTHORIZED);
+        }
+        String encrypt = PasswordCrypt.encrypt(updatePassword.getOldPassword());
+        if (! user.getPassword().equals(encrypt)) {
+            throw new ManagerUserException(ResultCode.USER_PASSWORD_ERROR);
+        }
+        user = new ManagerUser();
+        user.setOperator(userId);
+        user.setManagerUserId(userId);
+        //加密
+        user.setPassword(PasswordCrypt.encrypt(updatePassword.getNewPassword()));
+        this.managerUserService.update(user);
+    }
+
+    /**
+     * 注销
+     * @return
+     */
+    @GetMapping("/logout")
+    public void logout() {
+        this.clearSession();
+        setCookie(Constants.AUTH_TOKEN_NAME, "", "/", CookieUtils.getCookieDomain(),0);
+    }
+
     @PostMapping("")
     public Map<String, Object> create(@RequestBody final ManagerUser obj) {
         Session session = getSession();
@@ -72,42 +145,6 @@ public class ManagerUserController extends LocalBasicController {
         return resultMap(ResultCode.OK, "ManagerUser_id", id);
     }
 
-    @PostMapping("/newPassword")
-    public Map<String,Object> updatePass(@RequestBody final  UpdatePassword updatePassword){
-
-        if (updatePassword == null || updatePassword.getOldPassword() == null ||updatePassword.getNewPassword() == null) {
-            return  resultMap(ResultCode.NULL_PARAMETER);
-        }
-        //当前登录的用户ID
-        Long userId = getSessionQuietly().getUserId();
-        if (userId == null || userId == 0) {
-            return resultMap(ResultCode.UNAUTHORIZED);
-        }
-
-        //需要被修改密码的用户ID
-        Long targetUserId = updatePassword.getUserId();
-        if (targetUserId != null && targetUserId != 0) {
-            userId = targetUserId;
-        }
-        //获取指定 ID 的用户信息
-        ManagerUser user = managerUserService.getById(userId);
-        if (user ==  null) {
-            return resultMap(ResultCode.UNAUTHORIZED);
-        }
-        String encrypt = PasswordCrypt.encrypt(updatePassword.getOldPassword());
-        if (! user.getPassword().equals(encrypt)) {
-            return resultMap(ResultCode.USER_PASSWORD_ERROR);
-        }
-        user = new ManagerUser();
-        user.setOperator(userId);
-        user.setManagerUserId(userId);
-        //加密
-        user.setPassword(PasswordCrypt.encrypt(updatePassword.getNewPassword()));
-        this.managerUserService.update(user);
-
-        return resultMap(ResultCode.OK);
-
-    }
 
     @PutMapping("/{id}")
     public Map<String, Object> update(

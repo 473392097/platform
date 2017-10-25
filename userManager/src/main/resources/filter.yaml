@@ -1,8 +1,5 @@
 # auth
 authExcludes:
-- /image
-- /client/register
-- /login
-- /logout
-- /managerUser
+- /cloud/component/user
+- /cloud/component/managerUser
 - /category

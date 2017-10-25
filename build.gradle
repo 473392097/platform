@@ -20,7 +20,7 @@ targetCompatibility = 1.8
 repositories {
     mavenLocal()
     maven {url 'http://nexus.sudaotech.com/repository/maven-public' }
-    mavenCentral()
+//    mavenCentral()
 }
 
 tasks.withType(JavaCompile) {

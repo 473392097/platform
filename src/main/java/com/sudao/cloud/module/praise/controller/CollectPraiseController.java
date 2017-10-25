@@ -1,7 +1,7 @@
 package com.sudao.cloud.module.praise.controller;
 
 import com.sudao.cloud.module.base.config.ResultCode;
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.praise.vo.req.CollectPraiseQuery;
 import com.sudao.cloud.module.praise.vo.req.CollectPraiseReq;
 import com.sudao.cloud.module.praise.vo.resp.CollectPraiseResp;
@@ -51,7 +51,7 @@ public class CollectPraiseController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         CollectPraiseReq obj = new CollectPraiseReq();
         obj.setOperatorId(getUserId());
-        obj.setDeleted(Status.DELETED.code());
+        obj.setDeleted(Deleted.DELETED.code());
         return update(id, obj);
     }
 

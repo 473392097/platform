@@ -1,6 +1,6 @@
 package com.sudao.cloud.module.category.service;
 
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
@@ -25,7 +25,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
     @Override
     public CategoryResp getById(Long categoryId) {
         CategoryDTO categoryDTO = this.categoryDTOMapper.selectByPrimaryKey(categoryId);
-        if (categoryDTO != null && Status.NORMAL.code() == categoryDTO.getDeleted()) {
+        if (categoryDTO != null && Deleted.NORMAL.code() == categoryDTO.getDeleted()) {
             return BeanUtils.copyProperties(categoryDTO, CategoryResp.class);
         }
 
@@ -38,7 +38,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
         Date date = new Date();
 
         CategoryDTO categoryDTO = BeanUtils.copyProperties(obj, CategoryDTO.class);
-        categoryDTO.setDeleted(Status.NORMAL.code());
+        categoryDTO.setDeleted(Deleted.NORMAL.code());
         categoryDTO.setCreateTime(date);
         categoryDTO.setCreateUserId(obj.getOperatorId());
         categoryDTO.setCreateUserName(obj.getOperatorName());
@@ -65,7 +65,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
         Page<CategoryResp> page = new Page<CategoryResp>(query);
         CategoryDTOExample example = new CategoryDTOExample();
         CategoryDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("category_id DESC");
 
         long total = this.categoryDTOMapper.countByExample(example);

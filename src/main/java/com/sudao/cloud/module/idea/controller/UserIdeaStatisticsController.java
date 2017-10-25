@@ -1,7 +1,7 @@
 package com.sudao.cloud.module.idea.controller;
 
 import com.sudao.cloud.module.base.config.ResultCode;
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.idea.vo.req.UserIdeaStatisticsQuery;
 import com.sudao.cloud.module.idea.vo.req.UserIdeaStatisticsReq;
 import com.sudao.cloud.module.idea.vo.resp.UserIdeaStatisticsResp;
@@ -51,7 +51,7 @@ public class UserIdeaStatisticsController extends LocalBasicController {
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         UserIdeaStatisticsReq obj = new UserIdeaStatisticsReq();
         obj.setOperatorId(getUserId());
-        obj.setDeleted(Status.DELETED.code());
+        obj.setDeleted(Deleted.DELETED.code());
         return update(id, obj);
     }
 

@@ -1,6 +1,6 @@
 package com.sudao.cloud.module.idea.service;
 
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
@@ -25,7 +25,7 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 	@Override
 	public PlanContextResp getById(Long contextId) {
 		PlanContextDTO planContextDTO = this.planContextDTOMapper.selectByPrimaryKey(contextId);
-		if (planContextDTO != null && Status.NORMAL.code() == planContextDTO.getDeleted()) {
+		if (planContextDTO != null && Deleted.NORMAL.code() == planContextDTO.getDeleted()) {
 			return BeanUtils.copyProperties(planContextDTO, PlanContextResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 		Date date = new Date();
 
 		PlanContextDTO planContextDTO = BeanUtils.copyProperties(obj, PlanContextDTO.class);
-		planContextDTO.setDeleted(Status.NORMAL.code());
+		planContextDTO.setDeleted(Deleted.NORMAL.code());
         planContextDTO.setCreateTime(date);
         planContextDTO.setCreateUserId(obj.getOperatorId());
         planContextDTO.setCreateUserName(obj.getOperatorName());
@@ -65,7 +65,7 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
 		Page<PlanContextResp> page = new Page<PlanContextResp>(query);
         PlanContextDTOExample example = new PlanContextDTOExample();
         PlanContextDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("context_id DESC");
 
         long total = this.planContextDTOMapper.countByExample(example);

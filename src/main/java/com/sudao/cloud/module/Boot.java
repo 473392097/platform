@@ -8,8 +8,11 @@ import com.sudao.framework.core.Plugins;
 import com.sudao.framework.starter.ApplicationStarter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * componentTemplate

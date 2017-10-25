@@ -1,6 +1,6 @@
 package com.sudao.cloud.module.idea.service;
 
-import com.sudao.cloud.module.base.config.enums.Status;
+import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
@@ -25,7 +25,7 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService 
 	@Override
 	public ReportResp getById(Long reportId) {
 		ReportDTO reportDTO = this.reportDTOMapper.selectByPrimaryKey(reportId);
-		if (reportDTO != null && Status.NORMAL.code() == reportDTO.getDeleted()) {
+		if (reportDTO != null && Deleted.NORMAL.code() == reportDTO.getDeleted()) {
 			return BeanUtils.copyProperties(reportDTO, ReportResp.class);
 		}
 
@@ -38,7 +38,7 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService 
 		Date date = new Date();
 
 		ReportDTO reportDTO = BeanUtils.copyProperties(obj, ReportDTO.class);
-		reportDTO.setDeleted(Status.NORMAL.code());
+		reportDTO.setDeleted(Deleted.NORMAL.code());
         reportDTO.setCreateTime(date);
         reportDTO.setCreateUserId(obj.getOperatorId());
         reportDTO.setCreateUserName(obj.getOperatorName());
@@ -65,7 +65,7 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService 
 		Page<ReportResp> page = new Page<ReportResp>(query);
         ReportDTOExample example = new ReportDTOExample();
         ReportDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(Status.NORMAL.code());
+        criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("report_id DESC");
 
         long total = this.reportDTOMapper.countByExample(example);
