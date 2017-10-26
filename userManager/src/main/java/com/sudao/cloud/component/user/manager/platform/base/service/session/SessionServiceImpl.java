@@ -19,11 +19,10 @@ public class SessionServiceImpl extends BaseServiceImpl implements SessionServic
 
 
     @Autowired
-    private ManagerUserService managerUserService ;
+    private ManagerUserService managerUserService;
 
     @Autowired
     private MenuService menuService;
-
 
 
     @Override
@@ -85,7 +84,7 @@ public class SessionServiceImpl extends BaseServiceImpl implements SessionServic
         }
 
         @Override
-        public Map<String,Object> getPermissions() {
+        public Map<String, Object> getPermissions() {
             return new HashMap<>();
         }
 
@@ -100,13 +99,12 @@ public class SessionServiceImpl extends BaseServiceImpl implements SessionServic
 
         final Long userId = authToken.userId;
 
-//        this.resetSessionExpiryTime(authToken);
-
-        final ManagerUserService.ManagerUser user = managerUserService.getById(userId);
-        if (user.getDeleted() != Deleted.NORMAL || user.getStatus() != Status.ACTIVATE) {
-            logger.warn("userStatus is not available,{}", user);
-            return anonymousSession;
-        }
+//        final ManagerUserService.ManagerUser user = managerUserService.getById(userId);
+//
+//        if (user.getDeleted() != Deleted.NORMAL || user.getStatus() != Status.ACTIVATE) {
+//            logger.warn("userStatus is not available,{}", user);
+//            return anonymousSession;
+//        }
 
         return new Session() {
             @Override
@@ -116,11 +114,11 @@ public class SessionServiceImpl extends BaseServiceImpl implements SessionServic
 
             @Override
             public String getLoginName() {
-                return user.getLoginName();
+                return "";
             }
 
             @Override
-            public Map<String,Object> getPermissions() {
+            public Map<String, Object> getPermissions() {
                 return menuService.findPermissionsByUserId(userId);
             }
 
