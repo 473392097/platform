@@ -1,5 +1,6 @@
 # auth
 authExcludes:
-- /cloud/component/user
+- /cloud/component/user/registry
+- /cloud/component/user/login
 - /cloud/component/managerUser
 - /category
