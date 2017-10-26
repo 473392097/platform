@@ -1,7 +1,9 @@
 package com.sudao.cloud.module.base.controller;
 
+import com.sudao.cloud.component.user.manager.core.SessionTokenResolver;
 import com.sudao.cloud.module.base.config.ResultCode;
 import com.sudao.framework.controller.BasicController;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
@@ -16,6 +18,10 @@ import java.nio.file.Paths;
 public abstract class LocalBasicController extends BasicController {
 
     private static final String SESSION_USER_ID = "userId";
+
+    @Autowired
+    protected SessionTokenResolver sessionTokenResolver;
+
 
     protected void setOk(Object data) {
         this.setRecord(ResultCode.OK.getCode(), ResultCode.OK.getMessage(), data);
@@ -56,5 +62,13 @@ public abstract class LocalBasicController extends BasicController {
     protected long getUserId(){
         Object userId = super.getRequest().getAttribute(SESSION_USER_ID);
         return null == userId ? 0 : (long) userId;
+    }
+
+    public void setCookie(String name, String value, String path, String domain, Integer cycle) {
+        this.sessionTokenResolver.setCookie(this.response, name, value, path, domain, cycle);
+    }
+
+    public void clearSession() {
+        this.sessionTokenResolver.clearSession(this.request);
     }
 }

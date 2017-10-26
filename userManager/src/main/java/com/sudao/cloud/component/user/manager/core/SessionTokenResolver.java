@@ -6,14 +6,18 @@ import com.sudao.cloud.component.user.manager.platform.base.crypt.AuthToken;
 import com.sudao.cloud.component.user.manager.platform.base.service.redis.RedisService;
 import com.sudao.cloud.component.user.manager.platform.base.service.session.SessionService;
 import com.sudao.cloud.component.user.manager.platform.common.cons.Constants;
+import com.sudao.cloud.component.user.manager.platform.common.utils.CookieUtils;
 import com.sudao.cloud.component.user.manager.platform.common.utils.TokenUtils;
 import com.sudao.cloud.component.user.manager.platform.exception.UnauthorizeException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * platform
@@ -88,5 +92,29 @@ public class SessionTokenResolver implements SessionAware {
         return authToken;
     }
 
+
+    public void setCookie(HttpServletResponse response, String name, String value, String path, String domain, Integer cycle) {
+        Cookie cookie = new Cookie(name, value);
+
+        if (StringUtils.isBlank(path)) {
+            cookie.setPath("/");
+        } else {
+            cookie.setPath(path);
+        }
+
+        if (StringUtils.isNotBlank(domain)) {
+            cookie.setDomain(domain);
+        } else {
+            String sysDomain = CookieUtils.getCookieDomain();
+            if (StringUtils.isNotBlank(sysDomain)) {
+                cookie.setDomain(sysDomain);
+            }
+        }
+
+        if (cycle != null) {
+            cookie.setMaxAge(cycle);
+        }
+        response.addCookie(cookie);
+    }
 
 }

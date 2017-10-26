@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Map;
 /**
  * Created by fuqinqin on 2017/7/24.
  */
-public class LocalBasicController extends BasicController implements SessionAware{
+public class LocalBasicController extends BasicController implements SessionAware {
     private static final String CODE = "code";
     private static final String MESSAGE = "message";
     @Autowired
@@ -78,29 +79,8 @@ public class LocalBasicController extends BasicController implements SessionAwar
         return resultMap;
     }
 
-    protected void setCookie(String name, String value, String path, String domain, Integer cycle) {
-        Cookie cookie = new Cookie(name, value);
-
-        if (StringUtils.isBlank(path)) {
-            cookie.setPath("/");
-        } else {
-            cookie.setPath(path);
-        }
-
-        if (StringUtils.isNotBlank(domain)) {
-            cookie.setDomain(domain);
-        } else {
-            String sysDomain = CookieUtils.getCookieDomain();
-            if (StringUtils.isNotBlank(sysDomain)) {
-                cookie.setDomain(sysDomain);
-            }
-        }
-
-        if (cycle != null) {
-            cookie.setMaxAge(cycle);
-        }
-
-        this.getResponse().addCookie(cookie);
+    public void setCookie(String name, String value, String path, String domain, Integer cycle) {
+        this.sessionTokenResolver.setCookie(this.response, name, value, path, domain, cycle);
     }
 
 
