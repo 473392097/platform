@@ -2,7 +2,7 @@ package com.sudao.cloud.module.idea.service;
 
 import com.sudao.cloud.component.user.manager.exception.ManagerUserException;
 import com.sudao.cloud.component.user.manager.platform.base.crypt.PasswordCrypt;
-import com.sudao.cloud.component.user.manager.service.ManagerUserService;
+import com.sudao.cloud.component.user.manager.platform.base.result.ResultCode;
 import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
@@ -12,8 +12,12 @@ import com.sudao.cloud.module.idea.dao.dto.UserDTOExample;
 import com.sudao.cloud.module.idea.dao.mapper.UserDTOMapper;
 import com.sudao.cloud.module.idea.vo.req.UserQuery;
 import com.sudao.cloud.module.idea.vo.req.UserReq;
+import com.sudao.cloud.module.idea.vo.req.biz.LoginForTelephoneReq;
 import com.sudao.cloud.module.idea.vo.req.biz.UpdatePasswordReq;
+import com.sudao.cloud.module.idea.vo.req.biz.UserRegistryReq;
 import com.sudao.cloud.module.idea.vo.resp.UserResp;
+import jodd.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,38 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private UserDTOMapper userDTOMapper;
+
+
+    @Override
+    public UserResp login(LoginForTelephoneReq param) throws ManagerUserException {
+        UserResp user = null;
+        if (param != null && !StringUtils.isBlank(param.getTelephone())) {
+            user = this.getByTelephone(param.getTelephone());
+        }
+        if (user == null || !PasswordCrypt.encrypt(param.getPassword()).equals(user.getPassword())) {
+            logger.warn("password incorrect");
+            throw new ManagerUserException(ResultCode.AUTH_FAILED);
+        }
+        return user;
+    }
+
+    @Override
+    public void registry(UserRegistryReq param) throws ManagerUserException {
+        UserResp user = this.getByTelephone(param.getTelephone());
+        if (user != null) {
+            this.logger.warn("登录名已存在: {}", param.getTelephone());
+            throw new ManagerUserException(ResultCode.CONFLICT);
+        }
+        if (StringUtils.isBlank(param.getPassword())) {
+            throw new ManagerUserException(ResultCode.NON_PASSWORD_ERROR);
+        }
+
+        UserReq userReq = BeanUtils.copyProperties(param, UserReq.class);
+        //加密
+        userReq.setPassword(PasswordCrypt.encrypt(param.getPassword()));
+        this.create(userReq);
+    }
+
 
     @Override
     public UserResp getById(Long id) {
@@ -70,7 +106,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         UserDTOExample example = new UserDTOExample();
         UserDTOExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedEqualTo(Deleted.NORMAL.code());
-        example.setOrderByClause("id DESC");
+        example.setOrderByClause("user_id DESC");
 
         long total = this.userDTOMapper.countByExample(example);
         page.setTotal(total);
@@ -95,15 +131,25 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
 
+    @Override
     public void updatePassword(Long userId, UpdatePasswordReq param) throws ManagerUserException {
+
+        if (param == null || StringUtil.isEmpty(param.getOldPassword()) || StringUtil.isEmpty(param.getNewPassword())) {
+            throw new ManagerUserException(ResultCode.NULL_PARAMETER);
+        }
+        if (userId == null || userId == 0) {
+            throw new ManagerUserException(ResultCode.UNAUTHORIZED);
+        }
+        
+        
         //获取指定 ID 的用户信息
         UserResp user = this.getById(userId);
         if (user == null) {
-            throw new ManagerUserException(com.sudao.cloud.component.user.manager.platform.base.result.ResultCode.UNAUTHORIZED);
+            throw new ManagerUserException(ResultCode.UNAUTHORIZED);
         }
         String encrypt = PasswordCrypt.encrypt(param.getOldPassword());
         if (!user.getPassword().equals(encrypt)) {
-            throw new ManagerUserException(com.sudao.cloud.component.user.manager.platform.base.result.ResultCode.USER_PASSWORD_ERROR);
+            throw new ManagerUserException(ResultCode.USER_PASSWORD_ERROR);
         }
 
         UserReq userReq = BeanUtils.copyProperties(user, UserReq.class);

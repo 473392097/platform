@@ -17,6 +17,7 @@ public enum ResultCode {
 
     USER_PASSWORD_ERROR("1101", "密码错误"),
     AUTH_FAILED("1102", "登陆授权失败，手机号或密码错误"),
+    NON_PASSWORD_ERROR("1103", "密码未填写"),
     ;
 
     private final String code;

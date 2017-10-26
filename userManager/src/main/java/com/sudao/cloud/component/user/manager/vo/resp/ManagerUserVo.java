@@ -30,6 +30,8 @@ public interface ManagerUserVo {
 
         private String remark;
 
+        private String nikeName;
+
         public Long getManagerUserId() {
             return managerUserId;
         }
@@ -86,6 +88,23 @@ public interface ManagerUserVo {
             this.remark = remark;
         }
 
+        public String getImage() {
+            return image;
+        }
+
+        public SimpleUserInfo setImage(String image) {
+            this.image = image == null ? null : image.trim();
+            return this;
+        }
+
+        public String getNikeName() {
+            return nikeName;
+        }
+
+        public SimpleUserInfo setNikeName(String nikeName) {
+            this.nikeName = nikeName == null ? null : nikeName.trim();
+            return this;
+        }
 
         public static SimpleUserInfo parse(ManagerUserService.ManagerUser managerUser) {
             SimpleUserInfo target = BeanUtils.copyProperties(managerUser, SimpleUserInfo.class);

@@ -1,6 +1,7 @@
 package com.sudao.cloud.module.idea.controller;
 
 import com.sudao.cloud.component.user.manager.exception.ManagerUserException;
+import com.sudao.cloud.component.user.manager.platform.base.core.Session;
 import com.sudao.cloud.component.user.manager.platform.base.crypt.AuthToken;
 import com.sudao.cloud.component.user.manager.platform.base.crypt.PasswordCrypt;
 import com.sudao.cloud.component.user.manager.platform.common.cons.Constants;
@@ -20,6 +21,7 @@ import com.sudao.cloud.module.idea.vo.req.UserQuery;
 import com.sudao.cloud.module.idea.vo.req.UserReq;
 import com.sudao.cloud.module.idea.vo.req.biz.LoginForTelephoneReq;
 import com.sudao.cloud.module.idea.vo.req.biz.UpdatePasswordReq;
+import com.sudao.cloud.module.idea.vo.req.biz.UserRegistryReq;
 import com.sudao.cloud.module.idea.vo.resp.UserResp;
 import com.sudao.framework.controller.BaseRecord;
 import com.sudao.framework.controller.RestPrototypeController;
@@ -45,15 +47,7 @@ public class UserController extends LocalBasicController {
     @PostMapping("/login")
     public LoginResp login(@RequestBody final LoginForTelephoneReq param) throws ManagerUserException {
 
-        UserResp user = null;
-        // login by username
-        if (param != null && !StringUtils.isBlank(param.getTelephone())) {
-            user = this.userService.getByTelephone(param.getTelephone());
-        }
-        if (user == null || !PasswordCrypt.encrypt(param.getPassword()).equals(user.getPassword())) {
-            logger.warn("password incorrect");
-            throw new ManagerUserException(com.sudao.cloud.component.user.manager.platform.base.result.ResultCode.AUTH_FAILED);
-        }
+        UserResp user = this.userService.login(param);
         AuthToken authToken = new AuthToken(user.getUserId(), Constants.UserType.ADMIN, RandUtil.rand(), false);
         super.setCookie(Constants.AUTH_TOKEN_NAME, authToken.token(), "/", CookieUtils.getCookieDomain(), Constants.AUTH_TOKEN_AGE_MAX);
 
@@ -64,16 +58,8 @@ public class UserController extends LocalBasicController {
 
     @PostMapping("/newPassword")
     public void updatePass(@RequestBody final UpdatePasswordReq param) throws ManagerUserException {
-
-        if (param == null || StringUtil.isEmpty(param.getOldPassword()) || StringUtil.isEmpty(param.getNewPassword())) {
-            throw new ManagerUserException(com.sudao.cloud.component.user.manager.platform.base.result.ResultCode.NULL_PARAMETER);
-        }
         //当前登录的用户ID
         Long userId = super.sessionTokenResolver.getSessionQuietly(super.request).getUserId();
-        if (userId == null || userId == 0) {
-            throw new ManagerUserException(com.sudao.cloud.component.user.manager.platform.base.result.ResultCode.UNAUTHORIZED);
-
-        }
         this.userService.updatePassword(userId, param);
     }
 
@@ -88,17 +74,15 @@ public class UserController extends LocalBasicController {
         setCookie(Constants.AUTH_TOKEN_NAME, "", "/", CookieUtils.getCookieDomain(), 0);
     }
 
-    @PostMapping("/create")
-    public BaseRecord create(@RequestBody final UserReq obj) {
-        setOk(ResultCode.OK);
+    @PostMapping("/registry")
+    public LoginResp registry(@RequestBody final UserRegistryReq param) throws Exception {
+        this.userService.registry(param);
 
-        // create
-        obj.setOperatorId(getUserId());
-        boolean created = userService.create(obj);
-        if (!created) {
-            setFail(ResultCode.CREATE_FAIL);
-        }
-        return baseRecord;
+        // 注册后自动登录
+        LoginForTelephoneReq loginParam = new LoginForTelephoneReq();
+        loginParam.setPassword(param.getPassword());
+        loginParam.setTelephone(param.getTelephone());
+        return this.login(loginParam);
     }
 
     @PostMapping("/update/{id}")
