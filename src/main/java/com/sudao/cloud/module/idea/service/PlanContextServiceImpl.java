@@ -2,6 +2,7 @@ package com.sudao.cloud.module.idea.service;
 
 import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
+import com.sudao.cloud.module.base.dao.page.Pagination;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
 import com.sudao.cloud.module.idea.dao.dto.PlanContextDTO;
@@ -75,5 +76,25 @@ public class PlanContextServiceImpl extends BaseServiceImpl implements PlanConte
             page.setItems(BeanUtils.copyListProperties(list, PlanContextResp.class));
         }
         return page;
+	}
+
+	@Override
+	public Page<PlanContextResp> findByExample(PlanContextDTOExample example, Pagination pagination) {
+		Page<PlanContextResp> page = new Page<PlanContextResp>(pagination);
+		long total = this.planContextDTOMapper.countByExample(example);
+		page.setTotal(total);
+		if (total > pagination.getOffset()) {
+			List<PlanContextDTO> list = this.planContextDTOMapper.selectByExampleWithRowbounds(example, this.toRowBounds(pagination));
+			page.setItems(BeanUtils.copyListProperties(list, PlanContextResp.class));
+		}
+		return page;
+
+	}
+
+	@Override
+	public List<PlanContextResp> findByExample(PlanContextDTOExample example) {
+		List<PlanContextDTO> list = this.planContextDTOMapper.selectByExample(example);
+		List<PlanContextResp> targets = BeanUtils.copyListProperties(list, PlanContextResp.class);
+		return targets;
 	}
 }

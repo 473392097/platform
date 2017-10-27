@@ -62,10 +62,14 @@ public class IdeaController extends LocalBasicController {
     }
 
     @GetMapping("")
-    public BaseRecord find(IdeaQuery ideaQuery) {
+    public Page<IdeaResp> find(IdeaQuery ideaQuery) {
         Page<IdeaResp> page = ideaService.find(ideaQuery);
-        setOk(page);
-        return baseRecord;
+        return page;
+    }
+
+    public Page<IdeaResp> findAll(IdeaQuery ideaQuery) {
+        Page<IdeaResp> page = ideaService.find(ideaQuery);
+        return page;
     }
 
 }

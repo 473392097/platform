@@ -2,13 +2,18 @@ package com.sudao.cloud.module.idea.service;
 
 import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.dao.page.Page;
+import com.sudao.cloud.module.base.dao.page.Pagination;
 import com.sudao.cloud.module.base.service.BaseServiceImpl;
 import com.sudao.cloud.module.base.utils.BeanUtils;
+import com.sudao.cloud.module.idea.dao.dto.PlanDTO;
+import com.sudao.cloud.module.idea.dao.dto.PlanDTOExample;
 import com.sudao.cloud.module.idea.dao.dto.PlanDTO;
 import com.sudao.cloud.module.idea.dao.dto.PlanDTOExample;
 import com.sudao.cloud.module.idea.dao.mapper.PlanDTOMapper;
 import com.sudao.cloud.module.idea.vo.req.PlanQuery;
 import com.sudao.cloud.module.idea.vo.req.PlanReq;
+import com.sudao.cloud.module.idea.vo.resp.IdeaResp;
+import com.sudao.cloud.module.idea.vo.resp.PlanResp;
 import com.sudao.cloud.module.idea.vo.resp.PlanResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,5 +80,25 @@ public class PlanServiceImpl extends BaseServiceImpl implements PlanService {
             page.setItems(BeanUtils.copyListProperties(list, PlanResp.class));
         }
         return page;
+	}
+
+	@Override
+	public Page<PlanResp> findByExample(PlanDTOExample example, Pagination pagination) {
+		Page<PlanResp> page = new Page<PlanResp>(pagination);
+		long total = this.planDTOMapper.countByExample(example);
+		page.setTotal(total);
+		if (total > pagination.getOffset()) {
+			List<PlanDTO> list = this.planDTOMapper.selectByExampleWithRowbounds(example, this.toRowBounds(pagination));
+			page.setItems(BeanUtils.copyListProperties(list, PlanResp.class));
+		}
+		return page;
+
+	}
+
+	@Override
+	public List<PlanResp> findByExample(PlanDTOExample example) {
+		List<PlanDTO> list = this.planDTOMapper.selectByExample(example);
+		List<PlanResp> targets = BeanUtils.copyListProperties(list, PlanResp.class);
+		return targets;
 	}
 }

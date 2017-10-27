@@ -21,6 +21,7 @@ public class CollectPraiseServiceImpl extends BaseServiceImpl implements Collect
 
     @Autowired
     private CollectPraiseDTOMapper collectPraiseDTOMapper;
+    public final static String PRIMARY_KEY = "id";
 
 	@Override
 	public CollectPraiseResp getById(Long id) {
@@ -75,5 +76,12 @@ public class CollectPraiseServiceImpl extends BaseServiceImpl implements Collect
             page.setItems(BeanUtils.copyListProperties(list, CollectPraiseResp.class));
         }
         return page;
+	}
+
+	@Override
+	public List<CollectPraiseResp> findByExample(CollectPraiseDTOExample example) {
+		List<CollectPraiseDTO> list = this.collectPraiseDTOMapper.selectByExample(example);
+		List<CollectPraiseResp> targets = BeanUtils.copyListProperties(list, CollectPraiseResp.class);
+		return targets;
 	}
 }
