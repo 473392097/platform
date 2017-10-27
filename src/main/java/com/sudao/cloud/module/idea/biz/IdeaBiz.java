@@ -108,7 +108,7 @@ public class IdeaBiz {
      * @return
      */
     public Page<IdeaResp> findContributeIdea(String userId, IdeaQuery query) {
-
+        return null;
     }
 
 
