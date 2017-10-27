@@ -65,6 +65,12 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		Page<ArticleResp> page = new Page<ArticleResp>(query);
         ArticleDTOExample example = new ArticleDTOExample();
         ArticleDTOExample.Criteria criteria = example.createCriteria();
+		if(null != query.getArticleTitle()){
+			criteria.andArticleTitleLike("%"+query.getArticleTitle()+"%");
+		}if(null != query.getArticleCode()){
+			criteria.andArticleCodeLike("%"+query.getArticleCode()+"%");
+		}
+
         criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("article_id DESC");
 

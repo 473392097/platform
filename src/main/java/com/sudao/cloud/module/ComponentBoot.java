@@ -25,6 +25,7 @@ import java.util.List;
         "com.sudao.cloud.module.category.dao",
         "com.sudao.cloud.module.idea.dao",
         "com.sudao.cloud.module.praise.dao",
+        "com.sudao.cloud.module.commons.dao"
 })
 public class ComponentBoot extends ComponentStarter {
     /******* Fields Area *******/

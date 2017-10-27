@@ -5,3 +5,4 @@ authExcludes:
 - /cloud/component/managerUser
 - /category
 - /feedback
+- /article

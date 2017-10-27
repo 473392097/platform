@@ -21,7 +21,7 @@ public class ArticleController extends LocalBasicController {
     @Autowired
     private ArticleService articleService;
     
-    @PostMapping("/create")
+    @PostMapping("")
     public BaseRecord create(@RequestBody final ArticleReq obj) {
         setOk(ResultCode.OK);
 
@@ -34,7 +34,7 @@ public class ArticleController extends LocalBasicController {
         return baseRecord;
     }
 
-    @PostMapping("/update/{article_id}")
+    @PutMapping("/{article_id}")
     public BaseRecord update(@PathVariable(name = "article_id") final Long article_id, @RequestBody ArticleReq obj) {
         setOk(ResultCode.OK);
 
@@ -47,7 +47,7 @@ public class ArticleController extends LocalBasicController {
         return baseRecord;
     }
 
-    @PostMapping("/delete/{article_id}")
+    @DeleteMapping("/{article_id}")
     public BaseRecord delete(@PathVariable(name = "article_id") final Long article_id) {
         ArticleReq obj = new ArticleReq();
         obj.setOperatorId(getUserId());
