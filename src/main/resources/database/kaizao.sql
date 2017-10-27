@@ -280,4 +280,25 @@ CREATE TABLE `kz_user_idea_statistics` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户创意统计';
 
+
+DROP TABLE IF EXISTS `kz_article`;
+CREATE TABLE `kz_article` (
+  `article_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '文章主键',
+  `article_title` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '文章标题',
+  `article_code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '文章编码',
+  `article_content` text COLLATE utf8mb4_unicode_ci COMMENT '文章内容',
+  `remark` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '描述',
+  `display_order` int(11) DEFAULT '0' COMMENT '列表显示顺序',
+  `version` int(11) NOT NULL DEFAULT '0',
+  `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '通用状态 Status: 1:正常, 2:已删除',
+  `create_user_id` bigint(20) DEFAULT '0',
+  `create_user_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_user_id` bigint(20) DEFAULT '0',
+  `update_user_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`article_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='平台文章表';
+
 SET FOREIGN_KEY_CHECKS = 1;
