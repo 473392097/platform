@@ -98,6 +98,7 @@ public class IdeaBiz {
         praiseCriteria.andDeletedEqualTo(Deleted.NORMAL.code());
 
         List<CollectPraiseResp> byExample = this.collectPraiseService.findByExample(praiseExample);
+        return  null;
     }
 
     /**
