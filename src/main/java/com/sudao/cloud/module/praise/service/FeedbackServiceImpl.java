@@ -65,9 +65,19 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
 		Page<FeedbackResp> page = new Page<FeedbackResp>(query);
         FeedbackDTOExample example = new FeedbackDTOExample();
         FeedbackDTOExample.Criteria criteria = example.createCriteria();
-        criteria.andDeletedEqualTo(Deleted.NORMAL.code());
-        example.setOrderByClause("id DESC");
 
+		if(null != query.getFeedbackCellphone()){
+			criteria.andFeedbackCellphoneLike("%"+query.getFeedbackCellphone()+"%");
+		}if(null != query.getFeedbackUsername()){
+			criteria.andFeedbackUsernameLike("%"+query.getFeedbackUsername()+"%");
+		}if(null != query.getCreateTime()){
+			criteria.andContentBetween(query.getCreateTime(),query.getCreateTime());
+		}
+
+
+
+		criteria.andDeletedEqualTo(Deleted.NORMAL.code());
+        example.setOrderByClause("id DESC");
         long total = this.feedbackDTOMapper.countByExample(example);
         page.setTotal(total);
         if (total > query.getOffset()) {
@@ -100,7 +110,6 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
     //意见反馈
 	@Override
 	public int insertSelective(FeedbackDTO feedbackDTO){
-		System.out.println("11111");
 	    return feedbackDTOMapper.insertSelective(feedbackDTO);
 	}
 

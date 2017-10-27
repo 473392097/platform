@@ -25,7 +25,8 @@ public class FeedbackController extends LocalBasicController {
 
     @Autowired
     private FeedbackService feedbackService;
-    
+
+   // 添加
     @PostMapping("/create")
     public void create(@RequestBody final FeedbackReq obj) {
         boolean created = feedbackService.create(obj);
@@ -33,10 +34,10 @@ public class FeedbackController extends LocalBasicController {
 
 
 
+
     @PostMapping("/feedback")
     public void feedback(@RequestBody final SubmitFeedbackReq param) {
         Long userId = super.sessionTokenResolver.getSessionQuietly(super.request).getUserId();
-
         // create
         FeedbackReq target = new FeedbackReq();
         BeanUtils.copyProperties(param, target);
@@ -45,7 +46,8 @@ public class FeedbackController extends LocalBasicController {
 
 
 
-    @PostMapping("/update/{id}")
+   //修改
+   @PutMapping("/update/{id}")
     public BaseRecord update(@PathVariable(name = "id") final Long id, @RequestBody FeedbackReq obj) {
         setOk(ResultCode.OK);
 
@@ -58,7 +60,9 @@ public class FeedbackController extends LocalBasicController {
         return baseRecord;
     }
 
-    @PostMapping("/delete/{id}")
+
+    //删除
+    @DeleteMapping("/delete/{id}")
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         FeedbackReq obj = new FeedbackReq();
         obj.setOperatorId(getUserId());
@@ -66,11 +70,14 @@ public class FeedbackController extends LocalBasicController {
         return update(id, obj);
     }
 
+
+    //查询
     @GetMapping("/{id}")
     public FeedbackResp get(@PathVariable(name = "id") final Long id) {
         FeedbackResp obj = feedbackService.getById(id);
         return obj;
     }
+
 
     @GetMapping("")
     public BaseRecord find(FeedbackQuery feedbackQuery) {
@@ -78,6 +85,8 @@ public class FeedbackController extends LocalBasicController {
         setOk(page);
         return baseRecord;
     }
+
+
 
     @GetMapping("/find/phoneAndStatus")
     public Page<FeedbackResp> findPhoneAndStatus(FeedbackQuery feedbackQuery) throws KaizaoException {
