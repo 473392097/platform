@@ -36,7 +36,6 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
     public boolean create(CategoryReq obj) {
         logger.debug("Creating Category: {}", obj);
         Date date = new Date();
-
         CategoryDTO categoryDTO = BeanUtils.copyProperties(obj, CategoryDTO.class);
         categoryDTO.setDeleted(Deleted.NORMAL.code());
         categoryDTO.setCreateTime(date);
@@ -45,9 +44,9 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
         categoryDTO.setUpdateTime(date);
         categoryDTO.setUpdateUserId(obj.getOperatorId());
         categoryDTO.setUpdateUserName(obj.getOperatorName());
-
         return this.categoryDTOMapper.insertSelective(categoryDTO) > 0;
     }
+
 
     @Override
     public boolean update(CategoryReq obj) {

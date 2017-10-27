@@ -36,11 +36,14 @@ public abstract class LocalBasicController extends BasicController {
         this.setRecord(code, message, null);
     }
 
+
     protected void setRecord(String code, String message, Object data){
         baseRecord.setData(data);
         baseRecord.setCode(code);
         baseRecord.setMessage(message);
     }
+
+
 
     protected void writeFile(String filePath) throws IOException {
         Path path = Paths.get(filePath);
@@ -55,6 +58,8 @@ public abstract class LocalBasicController extends BasicController {
         outputStream.close();
     }
 
+
+
     /**
      * 获取用户ID
      * @return
@@ -64,9 +69,11 @@ public abstract class LocalBasicController extends BasicController {
         return null == userId ? 0 : (long) userId;
     }
 
+
     public void setCookie(String name, String value, String path, String domain, Integer cycle) {
         this.sessionTokenResolver.setCookie(this.response, name, value, path, domain, cycle);
     }
+
 
     public void clearSession() {
         this.sessionTokenResolver.clearSession(this.request);

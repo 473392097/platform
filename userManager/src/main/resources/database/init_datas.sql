@@ -45,6 +45,8 @@ CREATE TABLE `platform_manager_user` (
 -- ----------------------------
 -- Table structure for platform_menu
 -- ----------------------------
+
+
 DROP TABLE IF EXISTS `platform_menu`;
 CREATE TABLE `platform_menu` (
   `menu_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -129,7 +131,9 @@ CREATE TABLE `platform_user_role` (
   PRIMARY KEY (`user_role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='平台用户角色关系表';
 
-#初始化超级用户、角色、菜单
+
+
+-- 初始化超级用户、角色、菜单
 INSERT INTO platform_manager_user (manager_user_id, login_name, user_name, password, gender, email, telephone, remark, display_order, version, status, create_by, create_time, update_by, update_time, last_update, deleted) VALUES ('-1', 'admin', 'admin', '8895d5a664f3d5fb1f0bd6523abc1b4a', '1', 'admin@qq.com', '15821820391', 'admin', '1', '1', '1', NULL, now(), NULL,now(), now(), '1');
 
 INSERT INTO platform_role (role_id, name, code, remark, display_order, version, status, create_by, create_time, update_by, update_time, last_update, deleted) VALUES ('-1', '超级管理员', 'super_admin', '可以访问全系统的任何功能', '1', '1', '1', NULL, now(), NULL, now(), now(), '1');

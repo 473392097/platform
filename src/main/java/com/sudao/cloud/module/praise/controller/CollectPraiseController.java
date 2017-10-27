@@ -47,6 +47,7 @@ public class CollectPraiseController extends LocalBasicController {
         return baseRecord;
     }
 
+
     @PostMapping("/delete/{id}")
     public BaseRecord delete(@PathVariable(name = "id") final Long id) {
         CollectPraiseReq obj = new CollectPraiseReq();
@@ -55,11 +56,13 @@ public class CollectPraiseController extends LocalBasicController {
         return update(id, obj);
     }
 
+
     @GetMapping("/{id}")
     public CollectPraiseResp get(@PathVariable(name = "id") final Long id) {
         CollectPraiseResp obj = collectPraiseService.getById(id);
         return obj;
     }
+
 
     @GetMapping("")
     public BaseRecord find(CollectPraiseQuery collectPraiseQuery) {

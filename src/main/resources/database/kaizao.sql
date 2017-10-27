@@ -166,6 +166,9 @@ CREATE TABLE `cloud_component_user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+
+
 -- ----------------------------
 -- Table structure for kz_idea
 -- ----------------------------

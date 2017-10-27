@@ -1,6 +1,18 @@
-plugins {
-    id 'org.springframework.boot' version '1.5.2.RELEASE'
-}
+//buildscript {
+//    repositories {
+//        mavenLocal()
+//        maven {url 'http://nexus.sudaotech.com/repository/maven-public' }
+////    mavenCentral()
+//    }
+//
+//    dependencies {
+//        classpath 'org.spriYngframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE'
+//    }
+//}
+//
+//plugins {
+//    id 'org.springframework.boot' version '1.5.2.RELEASE'
+//}
 
 group 'com.sudao.cloud.module'
 version '1.0-SNAPSHOT'
@@ -10,9 +22,12 @@ apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'application'
 
-bootRepackage {
-    mainClass = "com.sudao.cloud.module.Boot"
-}
+mainClassName="com.sudao.cloud.module.Boot"
+
+
+//bootRepackage {
+//    mainClass = mainClassName
+//}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

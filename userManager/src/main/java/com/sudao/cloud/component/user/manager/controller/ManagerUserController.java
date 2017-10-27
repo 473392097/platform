@@ -277,7 +277,6 @@ public class ManagerUserController extends LocalBasicController {
         ManagerUserVo.SimpleUserInfo userInfo = BeanUtils.copyProperties(user, ManagerUserVo.SimpleUserInfo.class);
 
         return new Result<ManagerUserVo.SimpleUserInfo>(ResultCode.OK,userInfo );
-
     }
 
     public static void main(String[] args) {

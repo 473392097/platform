@@ -13,8 +13,10 @@ public interface FeedbackDTOMapper {
 
     int deleteByPrimaryKey(Long id);
 
+
     int insert(FeedbackDTO record);
 
+//    添加反馈信息
     int insertSelective(FeedbackDTO record);
 
     List<FeedbackDTO> selectByExampleWithRowbounds(FeedbackDTOExample example, RowBounds rowBounds);
@@ -30,4 +32,9 @@ public interface FeedbackDTOMapper {
     int updateByPrimaryKeySelective(FeedbackDTO record);
 
     int updateByPrimaryKey(FeedbackDTO record);
+
+    List<FeedbackDTO> abc(@Param("phone") String phone);
+
+
+
 }

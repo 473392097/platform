@@ -36,7 +36,6 @@ public class LocalBasicController extends BasicController implements SessionAwar
 
     protected static final TokenEncryption TOKEN_ENCRYPTION = new TokenEncryption(TokenKeys.get());
 
-
     protected static byte[] readStream(InputStream inStream) throws Exception {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -82,7 +81,6 @@ public class LocalBasicController extends BasicController implements SessionAwar
     public void setCookie(String name, String value, String path, String domain, Integer cycle) {
         this.sessionTokenResolver.setCookie(this.response, name, value, path, domain, cycle);
     }
-
 
     @Override
     public Session getSession(HttpServletRequest request) {

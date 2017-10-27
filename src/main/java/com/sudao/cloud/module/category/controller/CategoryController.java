@@ -24,7 +24,6 @@ public class CategoryController extends LocalBasicController {
     @PostMapping("/create")
     public BaseRecord create(@RequestBody final CategoryReq obj) {
         setOk(ResultCode.OK);
-
         // create
         obj.setOperatorId(getUserId());
         boolean created = categoryService.create(obj);
@@ -33,6 +32,10 @@ public class CategoryController extends LocalBasicController {
         }
         return baseRecord;
     }
+
+
+
+
 
     @PostMapping("/update/{categoryId}")
     public BaseRecord update(@PathVariable(name = "categoryId") final Long categoryId, @RequestBody CategoryReq obj) {

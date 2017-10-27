@@ -50,6 +50,7 @@ public class MenuController extends LocalBasicController {
         return update(id, obj);
     }
 
+
     @DeleteMapping("")
     public Map<String, Object> deleteMore(@RequestBody final List<Long> ids) {
     	if (!CollectionUtils.isEmpty(ids)) {
@@ -60,12 +61,15 @@ public class MenuController extends LocalBasicController {
         return resultMap(ResultCode.OK);
     }
 
+
+
     @GetMapping("/{id}")
     public Menu get(@PathVariable("id") final Long id) {
         Menu obj = menuService.getById(id);
-        
         return obj;
     }
+
+
 
     @GetMapping("")
     public Result<Page<Menu>> find(

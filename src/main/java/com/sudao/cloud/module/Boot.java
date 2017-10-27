@@ -1,5 +1,6 @@
 package com.sudao.cloud.module;
 
+import com.sudao.cloud.module.base.exception.KaizaoExceptionHandler;
 import com.sudao.framework.config.IComponentConfig;
 import com.sudao.framework.core.Constant;
 import com.sudao.framework.core.Handlers;
@@ -42,14 +43,17 @@ public class Boot extends ApplicationStarter {
 
     @Override
     public void configHandler(Handlers handlers) {
+        handlers.add(new KaizaoExceptionHandler());
     }
 
     @Override
     public void configInterceptor(Interceptors interceptors) {
+
     }
 
     @Override
     public void configPlugin(Plugins plugins) {
+
     }
 
     @Override
@@ -57,6 +61,7 @@ public class Boot extends ApplicationStarter {
         list.add(new com.sudao.cloud.module.ComponentBoot());
         list.add(new com.sudao.cloud.component.user.manager.ComponentBoot());
     }
+
 
     public static void main(String[] args) {
         new Boot().runApplication(args);

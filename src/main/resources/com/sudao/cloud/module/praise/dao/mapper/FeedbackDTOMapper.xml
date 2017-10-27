@@ -112,6 +112,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
   <insert id="insert" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
     insert into cloud_component_feedback (id, feedback_username, feedback_cellphone, 
       read_status, content, feedback_reply, 
@@ -126,6 +127,9 @@
       #{updateUserId,jdbcType=BIGINT}, #{updateUserName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{lastUpdate,jdbcType=TIMESTAMP})
   </insert>
+
+
+
   <insert id="insertSelective" parameterType="com.sudao.cloud.module.praise.dao.dto.FeedbackDTO">
     insert into cloud_component_feedback
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -397,4 +401,18 @@
       order by ${orderByClause}
     </if>
   </select>
+
+
+
+  <!--意见反馈存储到数据库-->
+ <!--<insert id="adviceFeedback" parameterType="String" >-->
+
+          <!--INSERT  into  cloud_component_feedback VALUES  cloud_component_feedback.content=#{adviceContent}-->
+
+ <!--</insert>-->
+
+
+
+
+
 </mapper>

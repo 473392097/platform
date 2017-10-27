@@ -4,35 +4,46 @@ import com.sudao.cloud.module.base.config.ResultCode;
 import com.sudao.cloud.module.base.config.enums.Deleted;
 import com.sudao.cloud.module.base.controller.LocalBasicController;
 import com.sudao.cloud.module.base.dao.page.Page;
+import com.sudao.cloud.module.base.exception.KaizaoException;
+import com.sudao.cloud.module.praise.dao.dto.FeedbackDTO;
 import com.sudao.cloud.module.praise.service.FeedbackService;
 import com.sudao.cloud.module.praise.vo.req.FeedbackQuery;
 import com.sudao.cloud.module.praise.vo.req.FeedbackReq;
+import com.sudao.cloud.module.praise.vo.req.biz.SubmitFeedbackReq;
 import com.sudao.cloud.module.praise.vo.resp.FeedbackResp;
 import com.sudao.framework.controller.BaseRecord;
 import com.sudao.framework.controller.RestPrototypeController;
+import jodd.util.StringUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestPrototypeController
-@RequestMapping("/feeback")
+@RequestMapping("/feedback")
 public class FeedbackController extends LocalBasicController {
 
     @Autowired
     private FeedbackService feedbackService;
     
     @PostMapping("/create")
-    public BaseRecord create(@RequestBody final FeedbackReq obj) {
-        setOk(ResultCode.OK);
+    public void create(@RequestBody final FeedbackReq obj) {
+        boolean created = feedbackService.create(obj);
+    }
+
+
+
+    @PostMapping("/feedback")
+    public void feedback(@RequestBody final SubmitFeedbackReq param) {
+        Long userId = super.sessionTokenResolver.getSessionQuietly(super.request).getUserId();
 
         // create
-        obj.setOperatorId(getUserId());
-        boolean created = feedbackService.create(obj);
-        if(!created){
-            setFail(ResultCode.CREATE_FAIL);
-        }
-        return baseRecord;
+        FeedbackReq target = new FeedbackReq();
+        BeanUtils.copyProperties(param, target);
+        feedbackService.create(target);
     }
+
+
 
     @PostMapping("/update/{id}")
     public BaseRecord update(@PathVariable(name = "id") final Long id, @RequestBody FeedbackReq obj) {
@@ -67,5 +78,26 @@ public class FeedbackController extends LocalBasicController {
         setOk(page);
         return baseRecord;
     }
+
+    @GetMapping("/find/phoneAndStatus")
+    public Page<FeedbackResp> findPhoneAndStatus(FeedbackQuery feedbackQuery) throws KaizaoException {
+        if(StringUtil.isEmpty(feedbackQuery.getFeedbackCellphone())) {
+            throw new KaizaoException(ResultCode.NULL_PARAMETERS);
+        }
+        Page<FeedbackResp> page = feedbackService.findPhoneAndStatus(feedbackQuery);
+        return page;
+    }
+
+
+
+    //添加意见反馈
+    @PostMapping("/insert/adviceFeedback")
+    public void adviceFeedback(@RequestBody final FeedbackDTO feedbackDTO){
+        System.out.println("controller");
+        feedbackService.insertSelective(feedbackDTO);
+    }
+
+
+
 
 }

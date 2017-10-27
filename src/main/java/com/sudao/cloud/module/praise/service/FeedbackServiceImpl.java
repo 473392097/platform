@@ -76,4 +76,34 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
         }
         return page;
 	}
+
+	@Override
+	public Page<FeedbackResp> findPhoneAndStatus(FeedbackQuery query) {
+		Page<FeedbackResp> page = new Page<FeedbackResp>(query);
+		FeedbackDTOExample example = new FeedbackDTOExample();
+		FeedbackDTOExample.Criteria criteria = example.createCriteria();
+		criteria.andFeedbackCellphoneEqualTo(query.getFeedbackCellphone());
+		criteria.andReadStatusEqualTo(query.getReadStatus());
+		criteria.andDeletedEqualTo(Deleted.NORMAL.code());
+		example.setOrderByClause("id DESC");
+
+		long total = this.feedbackDTOMapper.countByExample(example);
+		page.setTotal(total);
+		if (total > query.getOffset()) {
+			List<FeedbackDTO> list = this.feedbackDTOMapper.selectByExampleWithRowbounds(example, this.toRowBounds(query));
+			page.setItems(BeanUtils.copyListProperties(list, FeedbackResp.class));
+		}
+		return page;
+	}
+
+
+    //意见反馈
+	@Override
+	public int insertSelective(FeedbackDTO feedbackDTO){
+		System.out.println("11111");
+	    return feedbackDTOMapper.insertSelective(feedbackDTO);
+	}
+
+
+
 }

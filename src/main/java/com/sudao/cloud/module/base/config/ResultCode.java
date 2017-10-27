@@ -16,6 +16,7 @@ public enum ResultCode {
 
     NULL_PARAMETERS("1001", "参数为空"),
     ID_CODE_EXISTS("1002", "ID已执行"),
+
     ;
 
     private final String code;
