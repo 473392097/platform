@@ -1,9 +1,8 @@
 package com.sudao.cloud.module.base.config.enums;
 
 public enum Deleted {
-    DELETED(-1, "已删除"),
-    NORMAL(1, "正常"),
-    ;
+    DELETED(0, "删除"),
+    NORMAL(1, "正常");
     private final int code;
     private final String text;
 
