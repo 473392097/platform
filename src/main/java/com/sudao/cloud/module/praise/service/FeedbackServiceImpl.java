@@ -28,7 +28,6 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
 		if (feedbackDTO != null && Deleted.NORMAL.code() == feedbackDTO.getDeleted()) {
 			return BeanUtils.copyProperties(feedbackDTO, FeedbackResp.class);
 		}
-
 		return null;
 	}
 
@@ -36,7 +35,6 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
 	public boolean create(FeedbackReq obj) {
 		logger.debug("Creating Feedback: {}", obj);
 		Date date = new Date();
-
 		FeedbackDTO feedbackDTO = BeanUtils.copyProperties(obj, FeedbackDTO.class);
         feedbackDTO.setDeleted(Deleted.NORMAL.code());
         feedbackDTO.setCreateTime(date);
@@ -45,9 +43,9 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
         feedbackDTO.setUpdateTime(date);
         feedbackDTO.setUpdateUserId(obj.getOperatorId());
         feedbackDTO.setUpdateUserName(obj.getOperatorName());
-
 		return this.feedbackDTOMapper.insertSelective(feedbackDTO) > 0;
 	}
+
 
 	@Override
 	public boolean update(FeedbackReq obj) {
@@ -73,8 +71,6 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
 		}if(null != query.getCreateTime()){
 			criteria.andContentBetween(query.getCreateTime(),query.getCreateTime());
 		}
-
-
 
 		criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("id DESC");

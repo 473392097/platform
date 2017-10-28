@@ -11,23 +11,11 @@ public enum Deleted implements EnumType {
     NORMAL(1, "正常"),
     ;
 
+    private final Integer code;
+    private final String text;
     private Deleted(Integer code, String text){
         this.code = code;
         this.text = text;
-    }
-
-    private final Integer code;
-    private final String text;
-
-
-    @Override
-    public int code() {
-        return code;
-    }
-
-    @Override
-    public String text() {
-        return text;
     }
 
     public static Deleted codeOf(Integer code) {
@@ -53,6 +41,16 @@ public enum Deleted implements EnumType {
         return null;
     }
 
+    @Override
+    public int code() {
+        return code;
+    }
+
+    @Override
+    public String text() {
+        return text;
+    }
+
     public boolean equals(Deleted deleted){
         if(deleted == null){
             return false;
@@ -64,4 +62,6 @@ public enum Deleted implements EnumType {
 
         return true;
     }
+
+
 }

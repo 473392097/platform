@@ -7,6 +7,9 @@ import com.sudao.framework.starter.ComponentStarter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +35,12 @@ public class ComponentBoot extends ComponentStarter {
 
     /******* Construction Area *******/
     public ComponentBoot() {
+    }
+
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:ss:mm");
+        Date parse = sdf.parse("2017-10-28 00:00:00");
+        System.out.println(new Date(1509170628000L));
     }
 
     @Override

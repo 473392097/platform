@@ -305,3 +305,4 @@ CREATE TABLE `kz_article` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='平台文章表';
 
 SET FOREIGN_KEY_CHECKS = 1;
+

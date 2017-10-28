@@ -65,6 +65,14 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService 
 		Page<ReportResp> page = new Page<ReportResp>(query);
         ReportDTOExample example = new ReportDTOExample();
         ReportDTOExample.Criteria criteria = example.createCriteria();
+
+		if(null != query.getBeginDateTime() && null != query.getEndDateTime()) {
+			criteria.andCreateTimeBetween(query.getBeginDateTime(), query.getEndDateTime());
+		}
+		if(null != query.getProcessStatus()){
+			criteria.andProcessStatusLike(query.getProcessStatus());
+		}
+
         criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("report_id DESC");
 
