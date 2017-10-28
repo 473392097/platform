@@ -9,18 +9,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ReportQuery extends Pagination {
+
     private String beginTime;
     private String endTime;
     private Date beginDateTime;
     private Date endDateTime;
     private ProcessStatus processStatus;
 
-
-
     public String getBeginTime() {
         return beginTime;
     }
 
+    //把起始时间beginTime  long  或者 String类型转换成Date类型的
     public ReportQuery setBeginTime(String beginTime) throws ParseException {
         this.beginTime = beginTime;
         // long
@@ -31,7 +31,6 @@ public class ReportQuery extends Pagination {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             this.beginDateTime = sdf.parse(this.beginTime);
         }
-
         return this;
     }
 
@@ -39,6 +38,7 @@ public class ReportQuery extends Pagination {
         return endTime;
     }
 
+    //把结束时间setEndTime  long String类型转换成Date类型的
     public ReportQuery setEndTime(String endTime) throws ParseException {
         this.endTime = endTime;
         // long

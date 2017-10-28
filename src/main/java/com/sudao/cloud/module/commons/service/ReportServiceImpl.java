@@ -72,7 +72,6 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService 
 		if(null != query.getProcessStatus()){
 			criteria.andProcessStatusLike(query.getProcessStatus());
 		}
-
         criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("report_id DESC");
 
