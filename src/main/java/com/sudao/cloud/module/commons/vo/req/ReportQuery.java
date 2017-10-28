@@ -14,6 +14,7 @@ public class ReportQuery extends Pagination {
     private String endTime;
     private Date beginDateTime;
     private Date endDateTime;
+
     private ProcessStatus processStatus;
 
     public String getBeginTime() {
@@ -28,7 +29,7 @@ public class ReportQuery extends Pagination {
             this.beginDateTime = new Date(Long.parseLong(this.beginTime));
         } else {
             // string
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             this.beginDateTime = sdf.parse(this.beginTime);
         }
         return this;
@@ -46,7 +47,7 @@ public class ReportQuery extends Pagination {
             this.endDateTime = new Date(Long.parseLong(this.endTime));
         } else {
             // string
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             this.endDateTime = sdf.parse(this.endTime);
         }
         return this;

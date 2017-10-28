@@ -66,9 +66,17 @@ public class ReportServiceImpl extends BaseServiceImpl implements ReportService 
         ReportDTOExample example = new ReportDTOExample();
         ReportDTOExample.Criteria criteria = example.createCriteria();
 
+        //按照时间范围查询的三种情况
 		if(null != query.getBeginDateTime() && null != query.getEndDateTime()) {
 			criteria.andCreateTimeBetween(query.getBeginDateTime(), query.getEndDateTime());
+		}if(null != query.getBeginDateTime() && null == query.getEndDateTime() ) {
+			criteria.andCreateTimeGreaterThanOrEqualTo(query.getBeginDateTime());
 		}
+		if(null != query.getEndDateTime() && null == query.getBeginDateTime() ) {
+			criteria.andCreateTimeLessThanOrEqualTo(query.getEndDateTime());
+		}
+
+
 		if(null != query.getProcessStatus()){
 			criteria.andProcessStatusLike(query.getProcessStatus());
 		}

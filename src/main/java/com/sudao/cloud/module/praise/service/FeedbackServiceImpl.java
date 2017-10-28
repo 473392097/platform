@@ -68,9 +68,19 @@ public class FeedbackServiceImpl extends BaseServiceImpl implements FeedbackServ
 			criteria.andFeedbackCellphoneLike("%"+query.getFeedbackCellphone()+"%");
 		}if(null != query.getFeedbackUsername()){
 			criteria.andFeedbackUsernameLike("%"+query.getFeedbackUsername()+"%");
-		}if(null != query.getCreateTime()){
-			criteria.andContentBetween(query.getCreateTime(),query.getCreateTime());
 		}
+
+
+		//按照时间范围查询的三种情况
+		if(null != query.getBeginDateTime() && null != query.getEndDateTime()) {
+			criteria.andCreateTimeBetween(query.getBeginDateTime(), query.getEndDateTime());
+		}if(null != query.getBeginDateTime() && null == query.getEndDateTime() ) {
+			criteria.andCreateTimeGreaterThanOrEqualTo(query.getBeginDateTime());
+		}
+		if(null != query.getEndDateTime() && null == query.getBeginDateTime() ) {
+			criteria.andCreateTimeLessThanOrEqualTo(query.getEndDateTime());
+		}
+
 
 		criteria.andDeletedEqualTo(Deleted.NORMAL.code());
         example.setOrderByClause("id DESC");

@@ -32,9 +32,6 @@ public class FeedbackController extends LocalBasicController {
         boolean created = feedbackService.create(obj);
     }
 
-
-
-
     @PostMapping("/feedback")
     public void feedback(@RequestBody final SubmitFeedbackReq param) {
         Long userId = super.sessionTokenResolver.getSessionQuietly(super.request).getUserId();
